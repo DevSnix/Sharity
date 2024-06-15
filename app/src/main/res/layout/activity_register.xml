@@ -10,6 +10,15 @@
     android:background="@color/light_gray"
     tools:context=".RegisterActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create your \nSharity account"
+        android:gravity="center"
+        android:fontFamily="sans-serif-black"
+        android:textSize="30dp"
+        />
+
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
@@ -52,7 +61,6 @@
         android:background="@color/dark_blue"
         android:textColor="@color/white"
         android:layout_marginTop="16dp"
-        android:padding="10dp"
-        />
+        android:padding="10dp" />
 
 </LinearLayout>
