@@ -38,6 +38,11 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     testImplementation(libs.junit)
+    //implementation(libs.google.firebase.firestore)
+    // implementation(libs.firebase-firestore)
+    // implementation(libs.paypal-sdk)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
+
+//apply plugin : "com.google.gms.google-services"
