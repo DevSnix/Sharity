@@ -11,13 +11,23 @@
 
     tools:context=".LoginActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login to Sharity"
+        android:gravity="center"
+        android:fontFamily="sans-serif-black"
+        android:textSize="48dp"
+        />
+
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:layout_marginTop="25dp"/>
 
 
     <EditText
@@ -33,8 +43,8 @@
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dark_blue"
-        android:textColor="@color/white"
+        android:backgroundTint="@color/light_orange"
+        android:textColor="@color/black"
         android:text="Login"
         android:layout_marginTop="16dp"
         android:padding="10dp" />

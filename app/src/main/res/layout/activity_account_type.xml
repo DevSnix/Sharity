@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/light_gray"
+    tools:context=".RegisterActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select account type"
+        android:gravity="center"
+        android:fontFamily="sans-serif-black"
+        android:textSize="30dp"
+        />
+
+    <RadioGroup
+        android:id="@+id/account_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/donorAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Donor"/>
+
+        <RadioButton
+            android:id="@+id/doneeAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Donee"/>
+
+        <RadioButton
+            android:id="@+id/charityAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Charity"/>
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:backgroundTint="@color/light_orange"
+        android:textColor="@color/black"
+        android:layout_marginTop="16dp"
+        android:padding="10dp" />
+
+</LinearLayout>

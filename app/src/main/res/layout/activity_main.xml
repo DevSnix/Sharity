@@ -16,7 +16,9 @@
         android:layout_height="48dp"
         android:src="@drawable/profile"
         android:layout_gravity="end"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/app_name"
+        />
 
     <TextView
         android:id="@+id/tvWelcome"
@@ -55,7 +57,8 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:src="@drawable/pets"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/app_name"/>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -73,7 +76,8 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:src="@drawable/wildlife"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/app_name"/>
 
         </androidx.cardview.widget.CardView>
 
@@ -92,7 +96,8 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:src="@drawable/elderly"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/app_name"/>
 
         </androidx.cardview.widget.CardView>
 
@@ -111,7 +116,8 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:src="@drawable/children"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/app_name"/>
 
         </androidx.cardview.widget.CardView>
 

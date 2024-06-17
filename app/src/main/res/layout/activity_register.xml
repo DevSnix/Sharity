@@ -24,42 +24,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Username"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:layout_marginTop="50dp"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:padding="10dp"
-        android:layout_marginTop="16dp" />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="Password"
         android:inputType="textPassword"
         android:padding="10dp"
-        android:layout_marginTop="16dp" />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/etConfirmPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="Confirm Password"
         android:inputType="textPassword"
         android:padding="10dp"
-        android:layout_marginTop="16dp" />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Register"
-        android:background="@color/dark_blue"
-        android:textColor="@color/white"
+        android:backgroundTint="@color/light_orange"
+        android:textColor="@color/black"
         android:layout_marginTop="16dp"
         android:padding="10dp" />
 

@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "SharityApp"
+rootProject.name = "Sharity"
 include(":app")
  

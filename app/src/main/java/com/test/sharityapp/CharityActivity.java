@@ -7,16 +7,16 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+//import com.google.firebase.firestore.CollectionReference;
+//import com.google.firebase.firestore.FirebaseFirestore;
+//import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class CharityActivity extends AppCompatActivity {
 
     private TextView tvCharityTitle, tvTotalDonations, tvAmountRemaining;
     private Button btnDonate;
-    private FirebaseFirestore firestore;
-    private CollectionReference charityDonationsRef;
+    //private FirebaseFirestore firestore;
+    //private CollectionReference charityDonationsRef;
     private String charityType;
     private static final int TOTAL_AMOUNT_NEEDED = 10000; // Example total amount needed
 
@@ -33,8 +33,8 @@ public class CharityActivity extends AppCompatActivity {
         btnDonate = findViewById(R.id.btnDonate);
 
         // Initialize Firestore
-        firestore = FirebaseFirestore.getInstance();
-        charityDonationsRef = firestore.collection("charityDonations");
+        //firestore = FirebaseFirestore.getInstance();
+        //charityDonationsRef = firestore.collection("charityDonations");
 
         // Get the charity type from the intent
         charityType = getIntent().getStringExtra("CHARITY_TYPE");
@@ -43,7 +43,7 @@ public class CharityActivity extends AppCompatActivity {
         tvCharityTitle.setText(charityType);
 
         // Update charity details
-        updateCharityDetails();
+        //updateCharityDetails();
 
         btnDonate.setOnClickListener(view -> {
             Intent intent = new Intent(CharityActivity.this, DonationActivity.class);
@@ -53,7 +53,7 @@ public class CharityActivity extends AppCompatActivity {
 
     }
 
-    private void updateCharityDetails() {
+    /*private void updateCharityDetails() {
         charityDonationsRef
                 .whereEqualTo("charityType", charityType)
                 .get()
@@ -73,4 +73,6 @@ public class CharityActivity extends AppCompatActivity {
                     }
                 });
     }
+
+     */
 }

@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -37,12 +38,12 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.firebase.common)
+    implementation(libs.firebase.database)
     testImplementation(libs.junit)
-    //implementation(libs.google.firebase.firestore)
-    // implementation(libs.firebase-firestore)
-    // implementation(libs.paypal-sdk)
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    //implementation("com.paypal.android:card-payments:1.4.2-SNAPSHOT")
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
-
-//apply plugin : "com.google.gms.google-services"
