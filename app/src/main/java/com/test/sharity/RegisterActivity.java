@@ -89,12 +89,8 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         User newUser = new User(username, password, selectedAccountType, email, phoneNumber, address);
-        // Add your registration logic here (e.g., save to a database, send to server, etc.)
-
-        // For now, we will just show a success message
         Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
 
-        // Redirect to login activity after successful registration
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
