@@ -57,17 +57,6 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Add your authentication logic here (e.g., check with a server)
-
-        if (email.equals("user@example.com") && password.equals("password")) {
-            // Login successful
-            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
-            // Login failed
-            Toast.makeText(LoginActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
-        }
+        User.login(email, password, LoginActivity.this);
     }
 }
