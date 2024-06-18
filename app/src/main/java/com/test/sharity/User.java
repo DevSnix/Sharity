@@ -1,5 +1,9 @@
 package com.test.sharity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,10 +26,10 @@ public class User {
     }
 
     public User(String userName, String userPassword, String userType, String userEmail, String userPhoneNumber, String userAddress) {
-        generateAndSaveUniqueUserId(userName, userPassword, userType, userEmail, userPhoneNumber, userAddress);
+        register(userName, userPassword, userType, userEmail, userPhoneNumber, userAddress);
     }
 
-    private void generateAndSaveUniqueUserId(String userName, String userPassword, String userType, String userEmail, String userPhoneNumber, String userAddress) {
+    private void register(String userName, String userPassword, String userType, String userEmail, String userPhoneNumber, String userAddress) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = database.getReference("users");
         Random rand = new Random();
@@ -61,6 +65,38 @@ public class User {
         DatabaseReference usersRef = database.getReference("users");
         usersRef.child(String.valueOf(this.userId)).setValue(this);
     }
+
+    public static void login(String userEmail, String userPassword, Context context) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference usersRef = database.getReference("users");
+
+        usersRef.orderByChild("userEmail").equalTo(userEmail).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                        User user = userSnapshot.getValue(User.class);
+
+                        if (user != null && user.getUserPassword().equals(userPassword)) {
+                            Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(context, MainActivity.class);
+                            context.startActivity(intent);
+                        } else {
+                            Toast.makeText(context, "Incorrect password", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } else {
+                    Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(context, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     public int getUserId() {
         return userId;
