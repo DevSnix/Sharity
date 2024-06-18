@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/light_gray"
+    android:background="@color/white"
     tools:context=".RegisterActivity">
 
     <TextView
@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:text="Select account type"
         android:gravity="center"
+        android:textColor="@color/black"
         android:fontFamily="sans-serif-black"
         android:textSize="30dp"
         />
@@ -28,19 +29,22 @@
             android:id="@+id/donorAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Donor"/>
+            android:text="Donor"
+            android:textColor="@color/black"/>
 
         <RadioButton
             android:id="@+id/doneeAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Donee"/>
+            android:text="Donee"
+            android:textColor="@color/black"/>
 
         <RadioButton
             android:id="@+id/charityAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Charity"/>
+            android:text="Charity"
+            android:textColor="@color/black"/>
     </RadioGroup>
 
 
@@ -50,6 +54,7 @@
         android:layout_height="wrap_content"
         android:text="Next"
         android:backgroundTint="@color/light_orange"
+        android:textSize="18sp"
         android:textColor="@color/black"
         android:layout_marginTop="16dp"
         android:padding="10dp" />

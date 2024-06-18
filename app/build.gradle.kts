@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.test.sharityapp"
+    namespace = "com.test.sharity"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.test.sharityapp"
+        applicationId = "com.test.sharity"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

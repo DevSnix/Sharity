@@ -1,4 +1,4 @@
-package com.test.sharityapp;
+package com.test.sharity;
 
 import android.app.Application;
 import com.google.firebase.FirebaseApp;

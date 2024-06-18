@@ -1,15 +1,16 @@
 {
   "project_info": {
     "project_number": "363729168709",
+    "firebase_url": "https://sharity-5e06e-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "sharity-5e06e",
     "storage_bucket": "sharity-5e06e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:363729168709:android:c9c2b00b43618113f3362c",
+        "mobilesdk_app_id": "1:363729168709:android:8d8c9fa1fdcb77c2f3362c",
         "android_client_info": {
-          "package_name": "com.test.sharityapp"
+          "package_name": "com.test.sharity"
         }
       },
       "oauth_client": [],

@@ -1,11 +1,9 @@
-package com.test.sharityapp;
+package com.test.sharity;
 
 import android.os.Bundle;
-import androidx.activity.EdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
@@ -29,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
 
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,6 +34,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void signUpClick(View view) {
+        Intent register = new Intent(LoginActivity.this, AccountTypeActivity.class);
+        startActivity(register);
     }
 
 

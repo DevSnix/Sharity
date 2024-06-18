@@ -1,11 +1,9 @@
-package com.test.sharityapp;
+package com.test.sharity;
 
 import android.os.Bundle;
-import androidx.activity.EdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,11 +13,15 @@ import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private int userId;
     private EditText etUsername;
     private EditText etEmail;
     private EditText etPassword;
     private EditText etConfirmPassword;
+    private EditText etAddress;
+    private EditText etPhoneNumber;
     private Button btnRegister;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
+        etAddress = findViewById(R.id.etAddress);
+        etPhoneNumber = findViewById(R.id.etPhoneNumber);
         btnRegister = findViewById(R.id.btnRegister);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +49,9 @@ public class RegisterActivity extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
+        String address = etAddress.getText().toString().trim();
+        String phoneNumber = etPhoneNumber.getText().toString().trim();
+        String selectedAccountType = getIntent().getStringExtra("accountType");
 
         if (TextUtils.isEmpty(username)) {
             etUsername.setError("Username is required");
@@ -71,6 +78,17 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        if (TextUtils.isEmpty(address)) {
+            etEmail.setError("Address is required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(phoneNumber)) {
+            etEmail.setError("Phone Number is required");
+            return;
+        }
+
+        User newUser = new User(username, password, selectedAccountType, email, phoneNumber, address);
         // Add your registration logic here (e.g., save to a database, send to server, etc.)
 
         // For now, we will just show a success message
