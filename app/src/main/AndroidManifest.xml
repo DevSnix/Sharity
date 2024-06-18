@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,6 +15,7 @@
         android:theme="@style/Theme.Sharity"
         tools:targetApi="31"
         android:name=".SharityApplication"> <!-- this initializes the firebase connection in java class SharityApplication  -->
+
         <activity
             android:name=".AccountTypeActivity"
             android:exported="false" />
