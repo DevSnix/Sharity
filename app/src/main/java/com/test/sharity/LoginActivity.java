@@ -58,5 +58,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         User.login(email, password, LoginActivity.this);
+        finish();
     }
 }
