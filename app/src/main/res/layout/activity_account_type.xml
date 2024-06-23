@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/white"
-    tools:context=".RegisterActivity">
+    tools:context=".AccountTypeActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -17,8 +17,8 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:fontFamily="sans-serif-black"
-        android:textSize="30dp"
-        />
+        android:textSize="30sp"
+        tools:ignore="HardcodedText" />
 
     <RadioGroup
         android:id="@+id/account_type"

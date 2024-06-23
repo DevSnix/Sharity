@@ -88,11 +88,25 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        User newUser = new User(username, password, selectedAccountType, email, phoneNumber, address);
-        Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+        if(selectedAccountType.equalsIgnoreCase("Donor")) {
+            User newUser = new User(username, password, selectedAccountType, email, phoneNumber, address);
+            Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else if(selectedAccountType.equalsIgnoreCase("Donee")) {
+            User newUser = new User(username, password, selectedAccountType, email, phoneNumber, address);
+            Intent intent = new Intent(RegisterActivity.this, DoneeRegisterActivity.class);
+            Toast.makeText(RegisterActivity.this, phoneNumber, Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+            finish();
+        }
 
-        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+        else if(selectedAccountType.equalsIgnoreCase("Charity")) {
+
+        }
+
+
     }
 }
