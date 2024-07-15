@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/light_gray"
-    tools:context=".ProfileActivity">
+    tools:context=".ProfileFragment">
 
 
     <ImageView
@@ -15,7 +13,7 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_gravity="center"
-        android:src="@drawable/profile" />
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/tvUsername"
@@ -26,7 +24,8 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginTop="24dp"
-        android:gravity="center" />
+        android:gravity="center"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/tvEmail"
@@ -36,7 +35,8 @@
         android:text="Email"
         android:textSize="18sp"
         android:layout_marginTop="16dp"
-        android:gravity="center" />
+        android:gravity="center"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/tvPhoneNumber"
@@ -46,7 +46,8 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         android:layout_marginTop="16dp"
-        android:gravity="center" />
+        android:gravity="center"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btnViewActions"
@@ -55,7 +56,8 @@
         android:text="View Actions"
         android:textColor="@color/white"
         android:background="@color/dark_red"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="32dp"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btnViewDonationHistory"
@@ -64,6 +66,7 @@
         android:textColor="@color/white"
         android:text="View Donation History"
         android:background="@color/dark_red"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        tools:ignore="HardcodedText" />
 
 </LinearLayout>

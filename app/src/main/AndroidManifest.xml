@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:allowBackup="true"
@@ -20,7 +22,10 @@
             android:name=".AccountTypeActivity"
             android:exported="false" />
         <activity
-            android:name=".UserActionsActivity"
+            android:name=".DoneeRegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CharityRegisterActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
@@ -33,12 +38,6 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CharityActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Sharity</string>
+
+    <string-array name="charity_types">
+        <item>Select your charity category</item>
+        <item>Children</item>
+        <item>Adults</item>
+        <item>Pets</item>
+        <item>Wildlife</item>
+    </string-array>
 </resources>

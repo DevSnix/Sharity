@@ -1,5 +1,6 @@
 package com.test.sharity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ public class User {
         register(userName, userPassword, userType, userEmail, userPhoneNumber, userAddress);
     }
 
-    private void register(String userName, String userPassword, String userType, String userEmail, String userPhoneNumber, String userAddress) {
+    public void register(String userName, String userPassword, String userType, String userEmail, String userPhoneNumber, String userAddress) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = database.getReference("users");
         Random rand = new Random();
@@ -66,7 +67,7 @@ public class User {
         usersRef.child(String.valueOf(this.userId)).setValue(this);
     }
 
-    public static void login(String userEmail, String userPassword, Context context) {
+    public static void login(String userEmail, String userPassword, Activity activity) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = database.getReference("users");
 
@@ -78,21 +79,23 @@ public class User {
                         User user = userSnapshot.getValue(User.class);
 
                         if (user != null && user.getUserPassword().equals(userPassword)) {
-                            Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(context, MainActivity.class);
-                            context.startActivity(intent);
+                            Toast.makeText(activity, "Login successful", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(activity, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            activity.startActivity(intent);
+                            activity.finish();
                         } else {
-                            Toast.makeText(context, "Incorrect password", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, "Incorrect password", Toast.LENGTH_SHORT).show();
                         }
                     }
                 } else {
-                    Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "User not found", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(context, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

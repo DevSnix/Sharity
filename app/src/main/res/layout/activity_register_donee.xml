@@ -1,76 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/doneeRegister"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".DoneeRegisterActivity">
-
-    <TextView
+    android:layout_height="wrap_content">
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/doneeRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="40sp"
-        android:text="Submit your needs"
-        android:fontFamily="sans-serif-black"
-        android:gravity="center"
-        android:layout_marginTop="25dp"
-        tools:ignore="HardcodedText" />
+        android:orientation="vertical"
+        tools:context=".DoneeRegisterActivity"
+        android:backgroundTint="@color/white">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="25dp"
-        android:text="In order for you to get help from charities that exist on this platform, you're required to fill a genuine description of your current situation, the kind of help you want to receive and why you need it:"
-        tools:ignore="HardcodedText" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="40sp"
+            android:text="Submit your needs"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:layout_marginTop="25dp"
+            tools:ignore="HardcodedText" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Description:"
-        android:fontFamily="sans-serif-black"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="14dp"
-        android:textSize="20sp"
-        tools:ignore="HardcodedText,RtlHardcoded" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="25dp"
+            android:text="In order for you to get help from charities that exist on this platform, you're required to fill a genuine description of your current situation, the kind of help you want to receive and why you need it:"
+            tools:ignore="HardcodedText" />
 
-    <EditText
-        android:id="@+id/editTextDescription"
-        android:layout_width="370dp"
-        android:layout_height="wrap_content"
-        android:hint="Enter your description here"
-        android:inputType="textMultiLine"
-        android:lines="10"
-        android:gravity="top"
-        android:layout_gravity="center"
-        android:background="@android:drawable/edit_text"
-        tools:ignore="Autofill,HardcodedText" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description:"
+            android:fontFamily="sans-serif-black"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="14dp"
+            android:textSize="20sp"
+            tools:ignore="HardcodedText,RtlHardcoded" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="25dp"
-        android:text="Upon submitting this form, only the application manager will be exposed to the provided private details. You will be further informed via email regarding the donation request. \nAdditionally, your account will enter into 'in-review' mode, hence you will not be able to access it until further notice."
-        tools:ignore="HardcodedText" />
+        <EditText
+            android:id="@+id/editTextDescription"
+            android:layout_width="370dp"
+            android:layout_height="wrap_content"
+            android:hint="Enter your description here"
+            android:inputType="textMultiLine"
+            android:lines="10"
+            android:gravity="top"
+            android:layout_gravity="center"
+            android:background="@android:drawable/edit_text"
+            tools:ignore="Autofill,HardcodedText" />
 
-    <Button
-        android:layout_width="125dp"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/light_orange"
-        android:textSize="20sp"
-        android:layout_gravity="center"
-        android:layout_marginTop="37dp"
-        tools:ignore="HardcodedText" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="25dp"
+            android:text="Upon submitting this form, only the application manager will be exposed to the provided private details. You will be further informed via email regarding the donation request. \nAdditionally, your account will enter into 'in-review' mode, hence you will not be able to access it until further notice."
+            tools:ignore="HardcodedText" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnSubmitForm"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/light_orange"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="37dp"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
+</ScrollView>

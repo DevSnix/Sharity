@@ -30,6 +30,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildToolsVersion = "34.0.0"
 }
 
 dependencies {
@@ -41,8 +42,10 @@ dependencies {
     implementation(libs.firebase.common)
     implementation(libs.firebase.database)
     testImplementation(libs.junit)
-    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
-    implementation("com.google.firebase:firebase-analytics")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.google.firebase.database)
+    implementation(libs.picasso)
     //implementation("com.paypal.android:card-payments:1.4.2-SNAPSHOT")
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

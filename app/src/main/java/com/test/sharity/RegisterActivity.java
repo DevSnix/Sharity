@@ -36,11 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
         etPhoneNumber = findViewById(R.id.etPhoneNumber);
         btnRegister = findViewById(R.id.btnRegister);
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerUser();
-            }
+        btnRegister.setOnClickListener(v -> {
+            registerUser();
+            finish();
         });
     }
 
@@ -93,20 +91,11 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(intent);
-            finish();
         }
         else if(selectedAccountType.equalsIgnoreCase("Donee")) {
             User newUser = new User(username, password, selectedAccountType, email, phoneNumber, address);
             Intent intent = new Intent(RegisterActivity.this, DoneeRegisterActivity.class);
-            Toast.makeText(RegisterActivity.this, phoneNumber, Toast.LENGTH_SHORT).show();
             startActivity(intent);
-            finish();
         }
-
-        else if(selectedAccountType.equalsIgnoreCase("Charity")) {
-
-        }
-
-
     }
 }

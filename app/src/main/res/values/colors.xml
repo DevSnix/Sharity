@@ -31,4 +31,6 @@
     <color name="dark_orange">#BA451A</color>
     <color name="sand">#E1CA89</color>
     <color name="beige">#DCCB9D</color>
+    <color name="selectedFragment">#29B6F6</color>
+    <color name="unselectedFragment">#37474F</color>
 </resources>
