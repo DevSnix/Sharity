@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CharityProfileActivity">
+
+    <!-- Charity Image -->
+    <ImageView
+        android:id="@+id/imageViewCharityProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/charity_image"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <!-- Charity Name -->
+    <TextView
+        android:id="@+id/textViewCharityName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:padding="16dp"
+        android:text="Charity Name"
+        android:layout_below="@id/imageViewCharityProfile" />
+
+    <!-- About Us Text -->
+    <TextView
+        android:id="@+id/textViewAboutUs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="About Us:"
+        android:textStyle="bold"
+        android:layout_below="@id/textViewCharityName"/>
+
+    <!-- Charity Description -->
+    <TextView
+        android:id="@+id/textViewCharityDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:text="This is a brief description of the charity."
+        android:layout_below="@id/textViewAboutUs"
+        android:textStyle="bold"/>
+
+    <!-- Charity Type and Rating -->
+    <LinearLayout
+        android:id="@+id/linearLayoutCharityTypeRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_below="@id/textViewCharityDescription">
+
+        <TextView
+            android:id="@+id/textViewCharityType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:text="Charity Type"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textViewCharityRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginStart="8dp"
+            android:textStyle="bold"
+            android:text="Rating: 4.5" />
+
+    </LinearLayout>
+
+    <!-- Donate Now Button -->
+    <Button
+        android:id="@+id/buttonDonateNow"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Donate Now"
+        android:backgroundTint="@color/light_orange"
+        android:textColor="@android:color/black"
+        android:layout_margin="16dp"
+        android:layout_below="@id/linearLayoutCharityTypeRating"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
+
