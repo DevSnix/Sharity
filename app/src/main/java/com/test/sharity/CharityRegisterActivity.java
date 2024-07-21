@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
@@ -39,7 +40,6 @@ public class CharityRegisterActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView imageViewCharityLogo;
     private Uri imageUri;
-    private String imageUrl;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private FirebaseDatabase firebaseDatabase;
@@ -87,9 +87,11 @@ public class CharityRegisterActivity extends AppCompatActivity {
 
         buttonRegister.setOnClickListener(v -> {
             if (validateInputs()) {
-                uploadImage();
-                registerCharity();
-                finish();
+                if (imageUri != null) {
+                    uploadImageAndRegisterCharity();
+                } else {
+                    registerCharity(null); // Register without image
+                }
             }
         });
     }
@@ -110,7 +112,7 @@ public class CharityRegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadImage() {
+    private void uploadImageAndRegisterCharity() {
         if (imageUri != null) {
             Glide.with(this)
                     .asBitmap()
@@ -126,7 +128,7 @@ public class CharityRegisterActivity extends AppCompatActivity {
                             StorageReference fileReference = storageReference.child(System.currentTimeMillis() + ".jpg");
                             fileReference.putBytes(data)
                                     .addOnSuccessListener(taskSnapshot -> fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                                        imageUrl = uri.toString();
+                                        registerCharity(uri.toString());
                                     }))
                                     .addOnFailureListener(e -> {
                                         Toast.makeText(CharityRegisterActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
@@ -199,7 +201,7 @@ public class CharityRegisterActivity extends AppCompatActivity {
         return true;
     }
 
-    private void registerCharity() {
+    private void registerCharity(@Nullable String imageUrl) {
         String licenseNumberText = charityLicenseNumber.getText().toString().trim();
         int licenseNumber = Integer.parseInt(licenseNumberText);
         String name = charityName.getText().toString().trim();
@@ -210,8 +212,17 @@ public class CharityRegisterActivity extends AppCompatActivity {
         String description = charityDescription.getText().toString().trim();
 
         Charity charity = new Charity(licenseNumber, name, email, address, password, phoneNumber, charityType, imageUrl, description);
-        Toast.makeText(CharityRegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-        Intent loginPage = new Intent(CharityRegisterActivity.this, LoginActivity.class);
-        startActivity(loginPage);
+        charity.registerCharity(licenseNumber, name, email, address, password, phoneNumber, charityType, imageUrl, description);
+        databaseReference.child(String.valueOf(licenseNumber)).setValue(charity)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(CharityRegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                        Intent loginPage = new Intent(CharityRegisterActivity.this, LoginActivity.class);
+                        startActivity(loginPage);
+                        finish();
+                    } else {
+                        Toast.makeText(CharityRegisterActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
