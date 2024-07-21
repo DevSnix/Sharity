@@ -123,6 +123,49 @@
         android:entries="@array/charity_types"
         tools:ignore="TouchTargetSizeCheck" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upload your page picture, this will be displayed to the donors in be shown in the profile management.\nRecommended resoultion: 800x450"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-black"/>
+
+    <ImageView
+        android:id="@+id/imageViewCharityLogo"
+        android:layout_width="240dp"
+        android:layout_height="135dp"
+        android:layout_gravity="center"
+        android:contentDescription="Charity Image"/>
+
+    <Button
+        android:id="@+id/buttonSelectImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Choose Image" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter your brief charity description for donors to see in your charity window:"
+        android:fontFamily="sans-serif-black"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="14dp"
+        android:textSize="16sp"
+        tools:ignore="HardcodedText,RtlHardcoded" />
+
+    <EditText
+        android:id="@+id/editTextDescription"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter your description here"
+        android:inputType="textMultiLine"
+        android:lines="10"
+        android:gravity="top"
+        android:layout_gravity="center"
+        android:background="@android:drawable/edit_text"
+        tools:ignore="Autofill,HardcodedText" />
+
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
