@@ -28,7 +28,16 @@ public class Charity {
  private boolean charityStatus;
 
     public Charity(int licenseNumber, String charityName, String charityEmail, String branchAddress, String charityPassword, String charityPhoneNumber, String charityType, String imgUrl, String charityDescription) {
-        registerCharity(licenseNumber, charityName, charityEmail, branchAddress, charityPassword, charityPhoneNumber, charityType, imgUrl, charityDescription);
+        this.licenseNumber = licenseNumber;
+        this.charityName = charityName;
+        this.charityEmail = charityEmail;
+        this.branchAddress = branchAddress;
+        this.charityPassword = charityPassword;
+        this.charityPhoneNumber = charityPhoneNumber;
+        this.charityType = charityType;
+        this.imgUrl = imgUrl;
+        this.charityDescription = charityDescription;
+        this.rating = 0;
     }
 
     public Charity() {
