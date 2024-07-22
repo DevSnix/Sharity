@@ -147,7 +147,9 @@ public class User {
 
                         if (user != null && user.getUserPassword().equals(userPassword)) {
                             Toast.makeText(activity, "Login successful", Toast.LENGTH_SHORT).show();
+
                             Intent intent = new Intent(activity, MainActivity.class);
+                            intent.putExtra("userId", user.getUserId()); // Pass the user ID to MainActivity
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             activity.startActivity(intent);
                             activity.finish();
@@ -166,4 +168,5 @@ public class User {
             }
         });
     }
+
 }
