@@ -26,6 +26,9 @@
             android:name=".CharityProfileActivity"
             android:exported="false" />
         <activity
+            android:name=".SimulationPaymentActivity"
+            android:exported="false" />
+        <activity
             android:name=".DoneeRegisterActivity"
             android:exported="false" />
         <activity
