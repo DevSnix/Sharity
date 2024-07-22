@@ -16,3 +16,4 @@ public class UserDonationsHistoryFragment extends Fragment {
     }
 }
 
+// stopped here, taking a long break. next step was to show the user's donation history.
