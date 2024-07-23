@@ -40,7 +40,7 @@ public class Donation {
         this.amount = amount;
     }
 
-    public boolean isDonationStatus() {
+    public boolean getDonationStatus() {
         return donationStatus;
     }
 
