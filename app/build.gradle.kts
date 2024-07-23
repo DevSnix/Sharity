@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.firebase.common)
     implementation(libs.firebase.database)
     implementation(libs.firebase.storage)
+    implementation(libs.recyclerview)
     testImplementation(libs.junit)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
