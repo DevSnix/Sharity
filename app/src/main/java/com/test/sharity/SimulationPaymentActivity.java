@@ -25,17 +25,14 @@ public class SimulationPaymentActivity extends Activity {
         buttonConfirmPayment = findViewById(R.id.buttonConfirmPayment);
         buttonCancelPayment = findViewById(R.id.buttonCancelPayment);
 
-        buttonConfirmPayment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Simulate payment success
-                double amount = Double.parseDouble(editTextAmount.getText().toString());
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("paymentStatus", true);
-                resultIntent.putExtra("amount", amount);
-                setResult(RESULT_OK, resultIntent);
-                finish();
-            }
+        buttonConfirmPayment.setOnClickListener(v -> {
+            // Simulate payment success
+            double amount = Double.parseDouble(editTextAmount.getText().toString());
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("paymentStatus", true);
+            resultIntent.putExtra("amount", amount);
+            setResult(RESULT_OK, resultIntent);
+            finish();
         });
 
         buttonCancelPayment.setOnClickListener(new View.OnClickListener() {
