@@ -23,6 +23,9 @@
             android:name=".AccountTypeActivity"
             android:exported="false" />
         <activity
+            android:name=".UserUpdateProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".CharityProfileActivity"
             android:exported="false" />
         <activity
