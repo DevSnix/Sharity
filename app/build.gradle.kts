@@ -49,7 +49,6 @@ dependencies {
     implementation(libs.google.firebase.database)
     implementation(libs.picasso)
     implementation(libs.glide)
-    //implementation("com.paypal.android:card-payments:1.4.2-SNAPSHOT")
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
