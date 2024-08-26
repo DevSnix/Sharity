@@ -65,18 +65,24 @@ public class LoginActivity extends AppCompatActivity {
                     for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                         User user = userSnapshot.getValue(User.class);
                         if (user != null && user.getUserPassword().equals(password)) {
-                            // Store user info in shared preferences
-                            SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putInt("userId", user.getUserId());
-                            editor.putString("userName", user.getUserName());
-                            editor.putString("userEmail", user.getUserEmail());
-                            editor.apply();
+                            if(user.isUserStatus()) { // If user is active
+                                // Store user info in shared preferences
+                                SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putInt("userId", user.getUserId());
+                                editor.putString("userName", user.getUserName());
+                                editor.putString("userEmail", user.getUserEmail());
+                                editor.putString("phoneNumber", user.getUserPhoneNumber());
+                                editor.apply();
 
-                            // Start the main activity
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                                // Start the main activity
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else {
+                                Toast.makeText(LoginActivity.this, "Account is deleted", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             Toast.makeText(LoginActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
                         }
