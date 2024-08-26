@@ -79,10 +79,9 @@ public class CharityProfileActivity extends AppCompatActivity {
 
                     String imageUrl = charity.getImgUrl();
                     if (imageUrl != null && !imageUrl.isEmpty()) {
-                        Log.d("CharityProfileActivity", "Image URL: " + imageUrl);
                         loadCharityImage(imageUrl);
                     } else {
-                        Log.d("CharityProfileActivity", "Image URL is null or empty");
+                        Toast.makeText(CharityProfileActivity.this, "Image URL is null or empty!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
