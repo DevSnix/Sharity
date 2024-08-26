@@ -10,6 +10,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.Random;
 
 public class User {
@@ -22,6 +25,7 @@ public class User {
     private String userAddress;
     // if userStatus = false -> user is not active, otherwise it is active (true)
     private boolean userStatus;
+    private String profilePictureUrl;
 
     public User() {
 
@@ -95,6 +99,15 @@ public class User {
         this.userStatus = userStatus;
     }
 
+    public String getProfilePictureUrl() {
+        return profilePictureUrl;
+    }
+
+    public void setProfilePictureUrl(String profilePictureUrl) {
+        this.profilePictureUrl = profilePictureUrl;
+    }
+
+    // Takes user input and registers the user
     public void registerUser(String userName, String userPassword, String userType, String userEmail, String userPhoneNumber, String userAddress) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = database.getReference("users");
@@ -105,7 +118,7 @@ public class User {
             public void onDataChange(DataSnapshot snapshot) {
                 int newUserId;
                 do {
-                    newUserId = rand.nextInt(100000);  // Generate a random user ID
+                    newUserId = rand.nextInt(100000);  // Generate a random user ID between 0 - 100,000
                 } while (snapshot.hasChild(String.valueOf(newUserId)));  // Check if the ID already exists
 
                 userId = newUserId;
@@ -116,7 +129,7 @@ public class User {
                 User.this.userPhoneNumber = userPhoneNumber;
                 User.this.userAddress = userAddress;
                 userStatus = true;
-                saveToFirebase();
+                setDefaultPictureAndSaveUser();
             }
 
             @Override
@@ -125,48 +138,23 @@ public class User {
             }
         });
     }
+    //Retrieve default picture from database and set it to the user, then save the user to the database
+    private void setDefaultPictureAndSaveUser() {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("profile_pictures/default profile picture.png");
 
+        storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+            String downloadUrl = uri.toString();
+            setProfilePictureUrl(downloadUrl);
+            saveToFirebase();
+        }).addOnFailureListener(e -> {
+            // Handle the failure
+        });
+    }
     //Save user to Firebase Realtime Database
     public void saveToFirebase() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = database.getReference("users");
         usersRef.child(String.valueOf(this.userId)).setValue(this);
-    }
-
-    //Login user to application, checks if user email exists in the process
-    public static void login(String userEmail, String userPassword, Activity activity) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference usersRef = database.getReference("users");
-
-        usersRef.orderByChild("userEmail").equalTo(userEmail).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                        User user = userSnapshot.getValue(User.class);
-
-                        if (user != null && user.getUserPassword().equals(userPassword)) {
-                            Toast.makeText(activity, "Login successful", Toast.LENGTH_SHORT).show();
-
-                            Intent intent = new Intent(activity, MainActivity.class);
-                            intent.putExtra("userId", user.getUserId()); // Pass the user ID to MainActivity
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            activity.startActivity(intent);
-                            activity.finish();
-                        } else {
-                            Toast.makeText(activity, "Incorrect password", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                } else {
-                    Toast.makeText(activity, "User not found", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(activity, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 }
