@@ -1,15 +1,18 @@
 package com.test.sharity;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Fragment activeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,23 +24,23 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the default fragment
         if (savedInstanceState == null) {
-            loadFragment(new HomeFragment());
+            activeFragment = new HomeFragment();
+            loadFragment(activeFragment);
         }
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            Fragment selectedFragment = null;
             if (item.getTitle().equals("Home")) {
-                selectedFragment = new HomeFragment();
+                activeFragment = new HomeFragment();
             } else if (item.getTitle().equals("Followed")) {
-                selectedFragment = new FollowedCharitiesFragment();
+                activeFragment = new FollowedCharitiesFragment();
             } else if (item.getTitle().equals("Donations")) {
-                selectedFragment = new UserDonationsHistoryFragment();
+                activeFragment = new UserDonationsHistoryFragment();
             } else if (item.getTitle().equals("Profile")) {
-                selectedFragment = new ProfileFragment();
+                activeFragment = new ProfileFragment();
             }
 
-            if (selectedFragment != null) {
-                loadFragment(selectedFragment);
+            if (activeFragment != null) {
+                loadFragment(activeFragment);
                 return true;
             }
             return false;
@@ -52,23 +55,14 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            // If there are fragments in the back stack, pop the back stack
-            fragmentManager.popBackStack();
+        if (!(activeFragment instanceof HomeFragment)) {
+            activeFragment = new HomeFragment();
+            loadFragment(activeFragment);
         } else {
-            // If no fragments in the back stack, exit the app
-            moveTaskToBack(true);
-            finish();
+            super.onBackPressed(); // Call super to handle default back behavior on HomeFragment}
         }
+
     }
-
-
-
-
 }
