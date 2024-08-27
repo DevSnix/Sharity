@@ -1,10 +1,5 @@
 package com.test.sharity;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -128,7 +123,12 @@ public class User {
                 User.this.userEmail = userEmail;
                 User.this.userPhoneNumber = userPhoneNumber;
                 User.this.userAddress = userAddress;
-                userStatus = true;
+                if(userType.equalsIgnoreCase("Donor")) {
+                    userStatus = true;
+                }
+                else if (userType.equalsIgnoreCase("Donee")) {
+                    userStatus = false; //Account is not activated until admin grants approval of it
+                }
                 setDefaultPictureAndSaveUser();
             }
 
