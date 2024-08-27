@@ -32,7 +32,7 @@
             android:name=".SimulationPaymentActivity"
             android:exported="false" />
         <activity
-            android:name=".DoneeRegisterActivity"
+            android:name=".DoneeRegisterRequestActivity"
             android:exported="false" />
         <activity
             android:name=".CharityRegisterActivity"
@@ -50,7 +50,11 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".DonorMainActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".DoneeMainActivity"
             android:exported="false">
         </activity>
     </application>
