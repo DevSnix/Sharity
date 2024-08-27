@@ -54,6 +54,10 @@
             android:exported="false">
         </activity>
         <activity
+            android:name=".CharityReviewsActivity"
+            android:exported="false">
+        </activity>
+        <activity
             android:name=".DoneeMainActivity"
             android:exported="false">
         </activity>
