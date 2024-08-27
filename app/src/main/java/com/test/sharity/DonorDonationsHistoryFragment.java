@@ -3,7 +3,6 @@ package com.test.sharity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDonationsHistoryFragment extends Fragment {
+public class DonorDonationsHistoryFragment extends Fragment {
 
     private RecyclerView recyclerViewDonations;
     private DonationAdapter donationAdapter;
@@ -49,8 +48,11 @@ public class UserDonationsHistoryFragment extends Fragment {
             // Handle error: User ID not found
             return;
         }
+
         // Fetch donations from Firebase
         DatabaseReference donationsRef = FirebaseDatabase.getInstance().getReference("donations");
+        donationsRef.keepSynced(true); // This ensures donations node is always available offline
+
         donationsRef.orderByChild("userId").equalTo(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
