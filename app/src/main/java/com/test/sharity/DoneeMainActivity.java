@@ -33,8 +33,10 @@ public class DoneeMainActivity extends AppCompatActivity {
                 activeFragment = new HomeFragment();
             } else if (item.getTitle().equals("Followed")) {
                 activeFragment = new FollowedCharitiesFragment();
+            } else if(item.getTitle().equals("Campaign")) {
+                activeFragment = new CampaignFragment();
             } else if (item.getTitle().equals("Profile")) {
-                activeFragment = new DonorProfileFragment();
+                activeFragment = new ProfileFragment();
             }
 
             if (activeFragment != null) {
