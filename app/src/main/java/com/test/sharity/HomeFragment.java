@@ -41,6 +41,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    // Load charities from Firebase
     private void loadCharities() {
         DatabaseReference charitiesRef = FirebaseDatabase.getInstance().getReference("charities");
         charitiesRef.addValueEventListener(new ValueEventListener() {
