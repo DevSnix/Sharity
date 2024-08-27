@@ -18,13 +18,24 @@
     <!-- Charity Name -->
     <TextView
         android:id="@+id/textViewCharityName"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:textStyle="bold"
         android:padding="16dp"
         android:text="Charity Name"
         android:layout_below="@id/imageViewCharityProfile" />
+
+    <Button
+        android:id="@+id/btnFollow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Follow"
+        android:layout_below="@id/imageViewCharityProfile"
+        android:backgroundTint="@color/light_orange"
+        android:textColor="@color/black"
+        android:layout_alignParentRight="true"
+        android:layout_margin="15dp"/>
 
     <!-- About Us Text -->
     <TextView
