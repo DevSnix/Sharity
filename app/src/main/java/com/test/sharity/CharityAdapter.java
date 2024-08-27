@@ -25,6 +25,7 @@ public class CharityAdapter extends RecyclerView.Adapter<CharityAdapter.CharityV
         this.charityList = charityList;
     }
 
+    // Create a new ViewHolder which defines the views in the layout
     @NonNull
     @Override
     public CharityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -32,6 +33,7 @@ public class CharityAdapter extends RecyclerView.Adapter<CharityAdapter.CharityV
         return new CharityViewHolder(view);
     }
 
+    // Bind data to the views
     @Override
     public void onBindViewHolder(@NonNull CharityViewHolder holder, int position) {
         Charity charity = charityList.get(position);
@@ -50,6 +52,7 @@ public class CharityAdapter extends RecyclerView.Adapter<CharityAdapter.CharityV
         });
     }
 
+    // Update the data in the adapter
     @Override
     public int getItemCount() {
         return charityList.size();
@@ -62,6 +65,7 @@ public class CharityAdapter extends RecyclerView.Adapter<CharityAdapter.CharityV
         TextView textViewCharityType;
         TextView textViewCharityRating;
 
+        // Initialize views in the ViewHolder
         public CharityViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewCharity = itemView.findViewById(R.id.imageViewCharity);
