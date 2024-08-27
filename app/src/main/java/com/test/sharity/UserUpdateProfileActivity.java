@@ -140,12 +140,23 @@ public class UserUpdateProfileActivity extends AppCompatActivity {
             profilePicRef.putFile(selectedImageUri).addOnSuccessListener(taskSnapshot -> {
                 profilePicRef.getDownloadUrl().addOnSuccessListener(uri -> {
                     String newProfilePictureUrl = uri.toString();
-                    userRef.child("profilePictureUrl").setValue(newProfilePictureUrl);
+                    userRef.child("profilePictureUrl").setValue(newProfilePictureUrl)
+                            .addOnSuccessListener(aVoid -> {
+                                // Only finish the activity after the profile picture has been successfully updated in the database
+                                Toast.makeText(UserUpdateProfileActivity.this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
+                                finish();  // Finish the activity after everything is successfully updated
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(UserUpdateProfileActivity.this, "Failed to update profile picture in the database.", Toast.LENGTH_SHORT).show();
+                            });
                 });
+            }).addOnFailureListener(e -> {
+                Toast.makeText(UserUpdateProfileActivity.this, "Failed to upload profile picture.", Toast.LENGTH_SHORT).show();
             });
+        } else {
+            // If no new image was selected, finish the activity immediately after saving other details
+            finish();
         }
-
-        // Finish the activity after saving
-        finish();
     }
+
 }

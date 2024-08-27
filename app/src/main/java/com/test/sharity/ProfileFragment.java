@@ -123,7 +123,7 @@ public class ProfileFragment extends Fragment {
 
     // This function loads the profile picture from the database and caches it using Glide
     private void loadProfilePictureFromDatabase(String userId) {
-        DatabaseReference userDatabase = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+        DatabaseReference userDatabase = FirebaseDatabase.getInstance().getReference("users").child(userId);
 
         userDatabase.child("profilePictureUrl").get().addOnSuccessListener(dataSnapshot -> {
             String profilePictureUrl = dataSnapshot.getValue(String.class);
