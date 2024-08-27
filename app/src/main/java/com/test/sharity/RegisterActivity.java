@@ -1,19 +1,25 @@
 package com.test.sharity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class RegisterActivity extends AppCompatActivity {
 
-    private int userId;
     private EditText etUsername;
     private EditText etEmail;
     private EditText etPassword;
@@ -38,7 +44,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         btnRegister.setOnClickListener(v -> {
             registerUser();
-            finish();
         });
     }
 
@@ -87,15 +92,41 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         if(selectedAccountType.equalsIgnoreCase("Donor")) {
-            User newUser = new User(username, password, selectedAccountType, email, phoneNumber, address);
+            Donor newDonor = new Donor(username, password, selectedAccountType, email, phoneNumber, address);
             Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(intent);
         }
         else if(selectedAccountType.equalsIgnoreCase("Donee")) {
-            User newUser = new User(username, password, selectedAccountType, email, phoneNumber, address);
-            Intent intent = new Intent(RegisterActivity.this, DoneeRegisterActivity.class);
-            startActivity(intent);
+            Donee newDonee = new Donee(username, password, selectedAccountType, email, phoneNumber, address);
+
+            // After saving to Firebase, pass the userId to DoneeRegisterRequestActivity and go to it
+            FirebaseDatabase.getInstance().getReference("users").child(String.valueOf(newDonee.getUserId()))
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                // Save userId to SharedPreferences
+                                SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putInt("userId", newDonee.getUserId());
+                                editor.apply();
+
+                                // Navigate to the next activity after the userId has been saved
+                                Intent intent = new Intent(RegisterActivity.this, DoneeRegisterRequestActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "Failed to register user", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(RegisterActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
+
     }
 }
