@@ -21,7 +21,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class DonorProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
     private ImageView ivProfilePicture;
     private TextView tvUsername, tvEmail, tvPhoneNumber;
@@ -31,7 +31,7 @@ public class DonorProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_donor_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         // Initialize UI elements
         ivProfilePicture = view.findViewById(R.id.ivProfilePicture);

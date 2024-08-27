@@ -36,7 +36,7 @@ public class DonorMainActivity extends AppCompatActivity {
             } else if (item.getTitle().equals("Donations")) {
                 activeFragment = new DonorDonationsHistoryFragment();
             } else if (item.getTitle().equals("Profile")) {
-                activeFragment = new DonorProfileFragment();
+                activeFragment = new ProfileFragment();
             }
 
             if (activeFragment != null) {
