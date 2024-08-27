@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
     <LinearLayout
@@ -11,13 +12,30 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
+        <!-- Horizontal layout for TextView and SearchView -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Charities:"
-            android:textSize="30sp"
-            android:fontFamily="sans-serif-black"/>
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Charities:"
+                android:textSize="30sp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-black"/>
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:queryHint="Search charities"
+                android:iconifiedByDefault="false"
+                android:background="@drawable/search_view_background"
+                app:defaultQueryHint="Search charities"/>
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewCharities"
