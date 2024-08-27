@@ -1,6 +1,7 @@
 package com.test.sharity;
 
 public class Donation {
+    private String donationId;
     private double amount;
     private boolean donationStatus;
     private boolean isRepeatable;
@@ -32,6 +33,15 @@ public class Donation {
     }
 
     // Getters and setters
+
+    public String getDonationId() {
+        return donationId;
+    }
+
+    public void setDonationId(String donationId) {
+        this.donationId = donationId;
+    }
+
     public double getAmount() {
         return amount;
     }
