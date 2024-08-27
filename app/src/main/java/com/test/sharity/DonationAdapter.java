@@ -27,8 +27,18 @@ public class DonationAdapter extends RecyclerView.Adapter<DonationAdapter.Donati
     @Override
     public void onBindViewHolder(@NonNull DonationViewHolder holder, int position) {
         Donation donation = donationList.get(position);
+
+        // Set the donation amount
         holder.textViewDonationAmount.setText("Amount: $" + donation.getAmount());
-        holder.textViewDonationCharity.setText("Charity: " + donation.getCharity().getCharityName());
+
+        // Check if Charity object is present in the donation
+        if (donation.getCharity() != null) {
+            holder.textViewDonationCharity.setText("Charity: " + donation.getCharity().getCharityName());
+        } else {
+            holder.textViewDonationCharity.setText("Charity: Not available");
+        }
+
+        // Set the donation message and status
         holder.textViewDonationMessage.setText("Message: " + donation.getDonationMessage());
         holder.textViewDonationStatus.setText("Payment Succeeded: " + (donation.getDonationStatus() ? "Yes" : "No"));
     }
