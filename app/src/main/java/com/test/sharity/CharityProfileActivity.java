@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,8 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class CharityProfileActivity extends AppCompatActivity {
 
@@ -30,12 +33,18 @@ public class CharityProfileActivity extends AppCompatActivity {
     private TextView textViewCharityType;
     private TextView textViewCharityRating;
     private TextView textViewCharityDescription;
-    private Button buttonDonateNow, btnFollow;
+    private TextView textViewMostRecentReview;
+    private TextView textViewSeeAllReviews;
+    private EditText editTextReview;
+    private RatingBar ratingBarReview;
+    private Button buttonDonateNow, btnFollow, btnSubmitReview;
     private Charity charity;
     private int licenseNumber;
     private DatabaseReference userRef;
     private String userId;
     private boolean isFollowing;
+    private DatabaseReference charityRef;
+    private User currentUser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,19 +56,26 @@ public class CharityProfileActivity extends AppCompatActivity {
         textViewCharityType = findViewById(R.id.textViewCharityType);
         textViewCharityRating = findViewById(R.id.textViewCharityRating);
         textViewCharityDescription = findViewById(R.id.textViewCharityDescription);
+        textViewMostRecentReview = findViewById(R.id.textViewMostRecentReview);
+        textViewSeeAllReviews = findViewById(R.id.textViewSeeAllReviews);
+        editTextReview = findViewById(R.id.editTextReview);
+        ratingBarReview = findViewById(R.id.ratingBarReview);
         buttonDonateNow = findViewById(R.id.buttonDonateNow);
         btnFollow = findViewById(R.id.btnFollow);
+        btnSubmitReview = findViewById(R.id.btnSubmitReview);
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         userId = String.valueOf(sharedPreferences.getInt("userId", -1));
         userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+
+        // Fetch current user details
+        fetchCurrentUser();
 
         licenseNumber = getIntent().getIntExtra("licenseNumber", -1);
         if (licenseNumber != -1) {
             loadCharityDetails(licenseNumber);
         }
 
-        // Set up donate now button click listener
         buttonDonateNow.setOnClickListener(v -> {
             Intent intent = new Intent(CharityProfileActivity.this, SimulationPaymentActivity.class);
             intent.putExtra("licenseNumber", licenseNumber);
@@ -68,6 +84,29 @@ public class CharityProfileActivity extends AppCompatActivity {
 
         checkIfUserIsFollowing();
         btnFollow.setOnClickListener(v -> toggleFollowStatus());
+
+        btnSubmitReview.setOnClickListener(v -> submitReview());
+
+        textViewSeeAllReviews.setOnClickListener(v -> {
+            Intent intent = new Intent(CharityProfileActivity.this, CharityReviewsActivity.class);
+            intent.putExtra("licenseNumber", licenseNumber); // Pass the license number to the next activity
+            startActivity(intent);
+        });
+    }
+
+    // Fetch current user details from Firebase
+    private void fetchCurrentUser() {
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                currentUser = snapshot.getValue(User.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(CharityProfileActivity.this, "Failed to load user details", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // Check if user is following the charity
@@ -75,12 +114,7 @@ public class CharityProfileActivity extends AppCompatActivity {
         userRef.child("followedCharities").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Integer> followedCharities = new ArrayList<>();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Integer followedCharity = snapshot.getValue(Integer.class);
-                    followedCharities.add(followedCharity);
-                }
-                isFollowing = followedCharities.contains(licenseNumber);
+                isFollowing = dataSnapshot.hasChild(String.valueOf(licenseNumber));
                 updateFollowButton();
             }
 
@@ -131,9 +165,9 @@ public class CharityProfileActivity extends AppCompatActivity {
         }
     }
 
-    // Load charity details from firebase
+    // Load charity details from Firebase
     private void loadCharityDetails(int licenseNumber) {
-        DatabaseReference charityRef = FirebaseDatabase.getInstance().getReference("charities").child(String.valueOf(licenseNumber));
+        charityRef = FirebaseDatabase.getInstance().getReference("charities").child(String.valueOf(licenseNumber));
         charityRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -144,6 +178,7 @@ public class CharityProfileActivity extends AppCompatActivity {
                     textViewCharityRating.setText("Rating: " + charity.getRating());
                     textViewCharityDescription.setText(charity.getCharityDescription());
                     loadCharityImage(charity.getImgUrl());
+                    loadMostRecentReview();
                 }
             }
 
@@ -162,4 +197,74 @@ public class CharityProfileActivity extends AppCompatActivity {
                     .into(imageViewCharityProfile);
         }
     }
+
+    // Load most recent review
+    private void loadMostRecentReview() {
+        charityRef.child("reviews").orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Review review = snapshot.getValue(Review.class);
+                        if (review != null) {
+                            String reviewText = review.getReviewText() + "\nRating: " + review.getRating() + "\nBy: " + review.getUser().getUserName() + "\nDate: " + review.getDate();
+                            textViewMostRecentReview.setText(reviewText);
+                        }
+                    }
+                } else {
+                    textViewMostRecentReview.setText("No reviews yet");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(CharityProfileActivity.this, "Failed to load reviews", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    // Submit a review which includes the current user
+    private void submitReview() {
+        // Check if the user has already submitted a review
+        charityRef.child("reviews").orderByChild("user/userId").equalTo(currentUser.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // User has already submitted a review
+                    Toast.makeText(CharityProfileActivity.this, "You have already submitted a review for this charity.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // User has not submitted a review, proceed with submission
+                    String reviewText = editTextReview.getText().toString().trim();
+                    double rating = ratingBarReview.getRating();
+
+                    if (reviewText.isEmpty() || rating == 0.0) {
+                        Toast.makeText(CharityProfileActivity.this, "Please enter a review and rating", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    // Create the date string
+                    String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+
+                    // Create the Review object with the current date
+                    Review review = new Review(reviewText, rating, currentUser, date);
+
+                    // Submit the review to Firebase
+                    charityRef.child("reviews").push().setValue(review)
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(CharityProfileActivity.this, "Review submitted", Toast.LENGTH_SHORT).show();
+                                loadMostRecentReview(); // Reload the most recent review after submission
+                                editTextReview.setText(""); // Clear the input field
+                                ratingBarReview.setRating(0.0f); // Reset the rating bar
+                            })
+                            .addOnFailureListener(e -> Toast.makeText(CharityProfileActivity.this, "Failed to submit review", Toast.LENGTH_SHORT).show());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(CharityProfileActivity.this, "Failed to check for existing review", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

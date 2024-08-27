@@ -1,12 +1,12 @@
 package com.test.sharity;
 
-import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
 
 public class Charity {
  private int licenseNumber;
@@ -19,11 +19,10 @@ public class Charity {
  private String imgUrl;
  private String charityDescription;
  private float rating;
- /*
- private Donor charityDonors[];
- private Donation charityDonations[];
+ private List<Review> reviewList;
+ private List<Donor> charityDonors;
+ private List<Donation> charityDonations;
 
-  */
  //if charityStatus = false -> charity account is not active, otherwise it is active (true)
  private boolean charityStatus;
 
@@ -124,23 +123,29 @@ public class Charity {
         this.rating = rating;
     }
 
-    /*
-    public Donor[] getCharityDonors() {
+    public List<Review> getReviewList() {
+        return reviewList;
+    }
+
+    public void setReviewList(List<Review> reviewList) {
+        this.reviewList = reviewList;
+    }
+
+    public List<Donor> getCharityDonors() {
         return charityDonors;
     }
 
-    public void setCharityDonors(Donor[] charityDonors) {
+    public void setCharityDonors(List<Donor> charityDonors) {
         this.charityDonors = charityDonors;
     }
 
-    public Donation[] getCharityDonations() {
+    public List<Donation> getCharityDonations() {
         return charityDonations;
     }
 
-    public void setCharityDonations(Donation[] charityDonations) {
+    public void setCharityDonations(List<Donation> charityDonations) {
         this.charityDonations = charityDonations;
     }
-     */
 
     public boolean isCharityStatus() {
         return charityStatus;
