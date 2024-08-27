@@ -10,16 +10,16 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class MainActivity extends AppCompatActivity {
+public class DonorMainActivity extends AppCompatActivity {
 
     private Fragment activeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.donor_activity_main);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.donor_bottom_navigation);
         bottomNavigationView.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_LABELED);
 
         // Set up the default fragment
@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getTitle().equals("Followed")) {
                 activeFragment = new FollowedCharitiesFragment();
             } else if (item.getTitle().equals("Donations")) {
-                activeFragment = new UserDonationsHistoryFragment();
+                activeFragment = new DonorDonationsHistoryFragment();
             } else if (item.getTitle().equals("Profile")) {
-                activeFragment = new ProfileFragment();
+                activeFragment = new DonorProfileFragment();
             }
 
             if (activeFragment != null) {
@@ -57,12 +57,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.donor_bottom_navigation);
+
         if (!(activeFragment instanceof HomeFragment)) {
+            // Load the HomeFragment
             activeFragment = new HomeFragment();
             loadFragment(activeFragment);
-        } else {
-            super.onBackPressed(); // Call super to handle default back behavior on HomeFragment}
-        }
 
+            // Update the bottom navigation selected item to "Home"
+            bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        } else {
+            super.onBackPressed(); // Handle the default back behavior
+        }
     }
+
 }
