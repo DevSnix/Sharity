@@ -65,23 +65,48 @@ public class LoginActivity extends AppCompatActivity {
                     for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                         User user = userSnapshot.getValue(User.class);
                         if (user != null && user.getUserPassword().equals(password)) {
-                            if(user.isUserStatus()) { // If user is active
-                                // Store user info in shared preferences
-                                SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putInt("userId", user.getUserId());
-                                editor.putString("userName", user.getUserName());
-                                editor.putString("userEmail", user.getUserEmail());
-                                editor.putString("phoneNumber", user.getUserPhoneNumber());
-                                editor.apply();
+                            if (user.getUserType().equals("Donor")) {
+                                if(user.isUserStatus()) { // If user is active
+                                    // Store user info in shared preferences
+                                    SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putInt("userId", user.getUserId());
+                                    editor.putString("userName", user.getUserName());
+                                    editor.putString("userEmail", user.getUserEmail());
+                                    editor.putString("phoneNumber", user.getUserPhoneNumber());
+                                    editor.apply();
 
-                                // Start the main activity
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
+                                    // Start the main activity
+                                    Intent intent = new Intent(LoginActivity.this, DonorMainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else {
+                                    Toast.makeText(LoginActivity.this, "Account is deleted", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            else {
-                                Toast.makeText(LoginActivity.this, "Account is deleted", Toast.LENGTH_SHORT).show();
+                            else if(user.getUserType().equals("Donee")) {
+                                if(user.isUserStatus()) { // If user is active
+                                    // Store user info in shared preferences
+                                    SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putInt("userId", user.getUserId());
+                                    editor.putString("userName", user.getUserName());
+                                    editor.putString("userEmail", user.getUserEmail());
+                                    editor.putString("phoneNumber", user.getUserPhoneNumber());
+                                    editor.apply();
+
+                                    // Start the main activity
+                                    Intent intent = new Intent(LoginActivity.this, DoneeMainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else {
+                                    Toast.makeText(LoginActivity.this, "Account is not active yet or deleted", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else if(user.getUserType().equals("Charity")) {
+
                             }
                         } else {
                             Toast.makeText(LoginActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
