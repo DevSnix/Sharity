@@ -43,7 +43,7 @@ public class CharityProfileActivity extends AppCompatActivity {
     private TextView textViewSeeAllReviews;
     private EditText editTextReview;
     private RatingBar ratingBarReview;
-    private Button buttonDonateNow, btnFollow, btnSubmitReview;
+    private Button buttonDonateNow, btnFollow, btnSubmitReview, btnNavigateToCharity;
     private Charity charity;
     private int licenseNumber;
     private DatabaseReference userRef;
@@ -70,6 +70,7 @@ public class CharityProfileActivity extends AppCompatActivity {
         buttonDonateNow = findViewById(R.id.buttonDonateNow);
         btnFollow = findViewById(R.id.btnFollow);
         btnSubmitReview = findViewById(R.id.btnSubmitReview);
+        btnNavigateToCharity = findViewById(R.id.btnNavigateToCharity);
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);

@@ -186,6 +186,24 @@
             android:backgroundTint="@color/light_orange"
             android:textColor="@android:color/black" />
 
+        <View
+            android:layout_width="380dp"
+            android:layout_height="1dp"
+            android:layout_below="@id/btnSubmitReview"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/darker_gray"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:id="@+id/btnNavigateToCharity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnSubmitReview"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:text="Navigate to Charity"
+            android:backgroundTint="@color/light_orange"
+            android:textColor="@android:color/black" />
 
     </RelativeLayout>
 </ScrollView>
