@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,9 +20,9 @@ public class SimulationPaymentActivity extends Activity {
     private EditText editTextAmount;
     private Button buttonConfirmPayment;
     private Button buttonCancelPayment;
+    private CheckBox checkBoxAnonymous; // Add this line
 
     private int licenseNumber;
-    private Charity charity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,18 +32,20 @@ public class SimulationPaymentActivity extends Activity {
         editTextAmount = findViewById(R.id.editTextAmount);
         buttonConfirmPayment = findViewById(R.id.buttonConfirmPayment);
         buttonCancelPayment = findViewById(R.id.buttonCancelPayment);
+        checkBoxAnonymous = findViewById(R.id.checkBoxAnonymous); // Initialize CheckBox
 
         licenseNumber = getIntent().getIntExtra("licenseNumber", -1);
 
         buttonConfirmPayment.setOnClickListener(v -> {
             double amount = Double.parseDouble(editTextAmount.getText().toString());
-            handlePayment(true, amount);
+            boolean isAnonymous = checkBoxAnonymous.isChecked(); // Check if anonymous
+            handlePayment(true, amount, isAnonymous); // Pass isAnonymous to handlePayment
         });
 
-        buttonCancelPayment.setOnClickListener(v -> handlePayment(false, 0));
+        buttonCancelPayment.setOnClickListener(v -> handlePayment(false, 0, false));
     }
 
-    private void handlePayment(boolean paymentStatus, double amount) {
+    private void handlePayment(boolean paymentStatus, double amount, boolean isAnonymous) {
         // Retrieve the logged-in user's ID from shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId", -1);
@@ -65,7 +68,7 @@ public class SimulationPaymentActivity extends Activity {
         donation.setLicenseNumber(licenseNumber); // Use actual license number
         donation.setUserId(userId); // Use retrieved user ID
         donation.setDonationType("One-time");
-        donation.setAnonymous(false);
+        donation.setAnonymous(isAnonymous); // Set anonymous flag
         donation.setDonationMessage("Thank you for your support!");
 
         // Save donation details to Firebase

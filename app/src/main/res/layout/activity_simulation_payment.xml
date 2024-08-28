@@ -25,6 +25,15 @@
         android:inputType="numberDecimal"
         tools:ignore="HardcodedText" />
 
+    <CheckBox
+        android:id="@+id/checkBoxAnonymous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Donate anonymously?"
+        android:layout_marginTop="16dp"
+        tools:ignore="HardcodedText" />
+
+
     <Button
         android:id="@+id/buttonConfirmPayment"
         android:layout_width="match_parent"
