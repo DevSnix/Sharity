@@ -12,8 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+import java.util.Locale;
 
 public class CharityAdapter extends RecyclerView.Adapter<CharityAdapter.CharityViewHolder> {
 
@@ -39,18 +45,55 @@ public class CharityAdapter extends RecyclerView.Adapter<CharityAdapter.CharityV
         Charity charity = charityList.get(position);
         holder.textViewCharityName.setText(charity.getCharityName());
         holder.textViewCharityType.setText(charity.getCharityType());
-        holder.textViewCharityRating.setText(String.valueOf(charity.getRating()));
 
+        // Load the charity image using Glide
         Glide.with(context)
                 .load(charity.getImgUrl())
                 .into(holder.imageViewCharity);
 
+        // Query Firebase for the reviews of this charity and calculate the average rating
+        DatabaseReference reviewsRef = FirebaseDatabase.getInstance()
+                .getReference("charities")
+                .child(String.valueOf(charity.getLicenseNumber()))
+                .child("reviews");
+
+        reviewsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                double totalRating = 0.0;
+                int reviewCount = 0;
+
+                // Iterate through all reviews and calculate the average rating
+                for (DataSnapshot reviewSnapshot : dataSnapshot.getChildren()) {
+                    Review review = reviewSnapshot.getValue(Review.class);
+                    if (review != null) {
+                        totalRating += review.getRating();
+                        reviewCount++;
+                    }
+                }
+
+                if (reviewCount > 0) {
+                    double averageRating = totalRating / reviewCount;
+                    holder.textViewCharityRating.setText(String.format(Locale.getDefault(), "%.1f", averageRating));
+                } else {
+                    holder.textViewCharityRating.setText("No reviews yet");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                holder.textViewCharityRating.setText("Error");
+            }
+        });
+
+        // Handle the item click to open the CharityProfileActivity
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, CharityProfileActivity.class);
             intent.putExtra("licenseNumber", charity.getLicenseNumber());
             context.startActivity(intent);
         });
     }
+
 
     // Update the data in the adapter
     @Override
