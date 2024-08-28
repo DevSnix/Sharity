@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String licenseNumber = etLicenseNumber.getText().toString().trim();
-        int licenseNumberInt = Integer.parseInt(licenseNumber);
 
         if (TextUtils.isEmpty(email)) {
             etEmail.setError("Email is required");
@@ -65,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             handleUserLogin(email, password);
         } else {
             // Charity login logic
-            handleCharityLogin(email, password, licenseNumberInt);
+            handleCharityLogin(email, password, licenseNumber);
         }
     }
 
@@ -116,44 +115,36 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void handleCharityLogin(String email, String password, int licenseNumber) {
+    private void handleCharityLogin(String email, String password, String licenseNumber) {
         DatabaseReference charitiesRef = FirebaseDatabase.getInstance().getReference("charities");
 
-        // Query by the number instead of the string
-        charitiesRef.orderByChild("licenseNumber").equalTo(licenseNumber).addListenerForSingleValueEvent(new ValueEventListener() {
+        // Navigate directly to the child with the licenseNumber as the key
+        charitiesRef.child(licenseNumber).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    boolean isCharityFound = false;
-                    for (DataSnapshot charitySnapshot : dataSnapshot.getChildren()) {
-                        Charity charity = charitySnapshot.getValue(Charity.class);
-                        if (charity != null && charity.getCharityEmail().equals(email) && charity.getCharityPassword().equals(password)) {
-                            isCharityFound = true;
-                            if (charity.isCharityStatus()) { // If charity is active
-                                // Store charity info in shared preferences
-                                SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putInt("charityId", charity.getLicenseNumber());
-                                editor.putString("charityName", charity.getCharityName());
-                                editor.putString("charityEmail", charity.getCharityEmail());
-                                editor.apply();
+                    Charity charity = dataSnapshot.getValue(Charity.class);
+                    if (charity != null && charity.getCharityEmail().equals(email) && charity.getCharityPassword().equals(password)) {
+                        if (charity.isCharityStatus()) { // If charity is active
+                            // Store charity info in shared preferences
+                            SharedPreferences sharedPreferences = getSharedPreferences("CharityDetails", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt("charityId", charity.getLicenseNumber());
+                            editor.putString("charityName", charity.getCharityName());
+                            editor.putString("charityEmail", charity.getCharityEmail());
+                            editor.apply();
 
-                                // Start the charity main activity
-                                Intent intent = new Intent(LoginActivity.this, CharityManagementActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Charity account is not active", Toast.LENGTH_SHORT).show();
-                            }
-                            break;
+                            // Start the charity main activity
+                            Intent intent = new Intent(LoginActivity.this, CharityManagementActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Charity account is not active", Toast.LENGTH_SHORT).show();
                         }
-                    }
-
-                    if (!isCharityFound) {
+                    } else {
                         Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    // Display an error message if the license number is not found
                     Toast.makeText(LoginActivity.this, "Incorrect license number", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -164,6 +155,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 
