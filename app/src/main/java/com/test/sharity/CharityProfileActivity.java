@@ -1,13 +1,18 @@
 package com.test.sharity;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +34,7 @@ import java.util.Locale;
 public class CharityProfileActivity extends AppCompatActivity {
 
     private ImageView imageViewCharityProfile;
+    private ImageView imageViewReportCharity;
     private TextView textViewCharityName;
     private TextView textViewCharityType;
     private TextView textViewCharityRating;
@@ -51,6 +57,7 @@ public class CharityProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_charity_profile);
 
+        imageViewReportCharity = findViewById(R.id.imageViewReportCharity);
         imageViewCharityProfile = findViewById(R.id.imageViewCharityProfile);
         textViewCharityName = findViewById(R.id.textViewCharityName);
         textViewCharityType = findViewById(R.id.textViewCharityType);
@@ -63,6 +70,7 @@ public class CharityProfileActivity extends AppCompatActivity {
         buttonDonateNow = findViewById(R.id.buttonDonateNow);
         btnFollow = findViewById(R.id.btnFollow);
         btnSubmitReview = findViewById(R.id.btnSubmitReview);
+
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         userId = String.valueOf(sharedPreferences.getInt("userId", -1));
@@ -92,6 +100,8 @@ public class CharityProfileActivity extends AppCompatActivity {
             intent.putExtra("licenseNumber", licenseNumber); // Pass the license number to the next activity
             startActivity(intent);
         });
+
+        imageViewReportCharity.setOnClickListener(v -> showReportCharityDialog());
     }
 
     // Fetch current user details from Firebase
@@ -203,17 +213,43 @@ public class CharityProfileActivity extends AppCompatActivity {
         charityRef.child("reviews").orderByKey().limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Review review = snapshot.getValue(Review.class);
-                        if (review != null) {
-                            String reviewText = review.getReviewText() + "\nRating: " + review.getRating() + "\nBy: " + review.getUser().getUserName() + "\nDate: " + review.getDate();
-                            textViewMostRecentReview.setText(reviewText);
+                // Display the most recent review
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Review review = snapshot.getValue(Review.class);
+                    if (review != null) {
+                        String reviewText = review.getReviewText() + "\nRating: " + review.getRating() + "\nBy: " + review.getUser().getUserName() + "\nDate: " + review.getDate();
+                        textViewMostRecentReview.setText(reviewText);
+                    }
+                }
+
+                // Calculate the average rating using an array to hold the total rating and review count
+                final double[] totalRating = {0.0};
+                final int[] reviewCount = {0};
+
+                charityRef.child("reviews").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot allReviewsSnapshot) {
+                        for (DataSnapshot snapshot : allReviewsSnapshot.getChildren()) {
+                            Review review = snapshot.getValue(Review.class);
+                            if (review != null) {
+                                totalRating[0] += review.getRating();
+                                reviewCount[0]++;
+                            }
+                        }
+
+                        if (reviewCount[0] > 0) {
+                            double averageRating = totalRating[0] / reviewCount[0];
+                            textViewCharityRating.setText(String.format(Locale.getDefault(), "Rating: %.1f (%d reviews)", averageRating, reviewCount[0]));
+                        } else {
+                            textViewCharityRating.setText("Rating: N/A");
                         }
                     }
-                } else {
-                    textViewMostRecentReview.setText("No reviews yet");
-                }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(CharityProfileActivity.this, "Failed to calculate average rating", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
@@ -222,6 +258,8 @@ public class CharityProfileActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     // Submit a review which includes the current user
     private void submitReview() {
@@ -265,6 +303,38 @@ public class CharityProfileActivity extends AppCompatActivity {
                 Toast.makeText(CharityProfileActivity.this, "Failed to check for existing review", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showReportCharityDialog() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(CharityProfileActivity.this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_report_charity, null);
+        dialogBuilder.setView(dialogView);
+
+        Spinner spinnerReportReason = dialogView.findViewById(R.id.spinnerReportReason);
+        EditText editTextReportDetails = dialogView.findViewById(R.id.editTextReportDetails);
+        Button buttonSubmitReport = dialogView.findViewById(R.id.buttonSubmitReport);
+
+        // Populate the spinner with reasons
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.report_reasons_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerReportReason.setAdapter(adapter);
+
+        AlertDialog alertDialog = dialogBuilder.create();
+
+        buttonSubmitReport.setOnClickListener(v -> {
+            String selectedReason = spinnerReportReason.getSelectedItem().toString();
+            String additionalDetails = editTextReportDetails.getText().toString().trim();
+
+            // Handle the report submission (e.g., save to Firebase or send to admin)
+            Toast.makeText(CharityProfileActivity.this, "Report submitted: " + selectedReason, Toast.LENGTH_SHORT).show();
+
+            // Close the dialog
+            alertDialog.dismiss();
+        });
+
+        alertDialog.show();
     }
 
 }

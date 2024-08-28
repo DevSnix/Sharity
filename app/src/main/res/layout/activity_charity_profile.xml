@@ -19,6 +19,20 @@
             android:contentDescription="@string/charity_image"
             tools:srcCompat="@tools:sample/avatars" />
 
+        <ImageView
+            android:id="@+id/imageViewReportCharity"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="16dp"
+            android:background="@drawable/round_background_report"
+            android:padding="8dp"
+            android:src="@drawable/ic_report"
+            android:contentDescription="@string/report_charity"
+            android:clickable="true"
+            android:focusable="true" />
+
         <!-- Charity Name -->
         <TextView
             android:id="@+id/textViewCharityName"

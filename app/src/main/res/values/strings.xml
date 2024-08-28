@@ -9,4 +9,12 @@
         <item>Pets</item>
         <item>Wildlife</item>
     </string-array>
+
+    <string name="report_charity">Report Charity</string>
+    <string-array name="report_reasons_array">
+        <item>Inappropriate content</item>
+        <item>Fraud</item>
+        <item>False information</item>
+        <item>Other</item>
+    </string-array>
 </resources>
