@@ -10,17 +10,21 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SimulationPaymentActivity extends Activity {
 
     private EditText editTextAmount;
     private Button buttonConfirmPayment;
     private Button buttonCancelPayment;
-    private CheckBox checkBoxAnonymous; // Add this line
+    private CheckBox checkBoxAnonymous;
 
     private int licenseNumber;
 
@@ -32,7 +36,7 @@ public class SimulationPaymentActivity extends Activity {
         editTextAmount = findViewById(R.id.editTextAmount);
         buttonConfirmPayment = findViewById(R.id.buttonConfirmPayment);
         buttonCancelPayment = findViewById(R.id.buttonCancelPayment);
-        checkBoxAnonymous = findViewById(R.id.checkBoxAnonymous); // Initialize CheckBox
+        checkBoxAnonymous = findViewById(R.id.checkBoxAnonymous);
 
         licenseNumber = getIntent().getIntExtra("licenseNumber", -1);
 
@@ -59,31 +63,50 @@ public class SimulationPaymentActivity extends Activity {
         DatabaseReference donationsRef = FirebaseDatabase.getInstance().getReference("donations");
         String donationId = donationsRef.push().getKey();
 
-        // Collect donation details
-        Donation donation = new Donation();
-        donation.setDonationId(donationId); // Set the donationId
-        donation.setAmount(amount);
-        donation.setDonationStatus(paymentStatus);
-        donation.setRepeatable(false);
-        donation.setLicenseNumber(licenseNumber); // Use actual license number
-        donation.setUserId(userId); // Use retrieved user ID
-        donation.setDonationType("One-time");
-        donation.setAnonymous(isAnonymous); // Set anonymous flag
-        donation.setDonationMessage("Thank you for your support!");
+        // Retrieve the charity details based on the license number
+        DatabaseReference charityRef = FirebaseDatabase.getInstance().getReference("charities").child(String.valueOf(licenseNumber));
+        charityRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Charity charity = dataSnapshot.getValue(Charity.class);
+                if (charity != null) {
+                    // Create the donation object and set the charity
+                    Donation donation = new Donation();
+                    donation.setDonationId(donationId);
+                    donation.setAmount(amount);
+                    donation.setDonationStatus(paymentStatus);
+                    donation.setRepeatable(false);
+                    donation.setLicenseNumber(licenseNumber);
+                    donation.setUserId(userId);
+                    donation.setDonationType("One-time");
+                    donation.setAnonymous(isAnonymous);
+                    donation.setDonationMessage("Thank you for your support!");
+                    donation.setCharity(charity);
 
-        // Save donation details to Firebase
-        donationsRef.child(donationId).setValue(donation);
+                    // Save donation details to Firebase
+                    donationsRef.child(donationId).setValue(donation);
 
-        // Add donation to donor's donation list
-        addDonationToDonor(userId, donation);
+                    // Add donation to donor's donation list
+                    addDonationToDonor(userId, donation);
 
-        // Return the result to the CharityProfileActivity
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("paymentStatus", paymentStatus);
-        resultIntent.putExtra("amount", amount);
-        setResult(RESULT_OK, resultIntent);
-        finish();
+                    // Return the result to the CharityProfileActivity
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("paymentStatus", paymentStatus);
+                    resultIntent.putExtra("amount", amount);
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
+                } else {
+                    Toast.makeText(SimulationPaymentActivity.this, "Charity not found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(SimulationPaymentActivity.this, "Failed to retrieve charity data", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 
     private void addDonationToDonor(int userId, Donation donation) {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(String.valueOf(userId));
