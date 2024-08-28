@@ -49,6 +49,28 @@
         tools:ignore="HardcodedText" />
     <!--"autofillHints" definition: allows the phone to use its autofill features-->
 
+    <EditText
+        android:id="@+id/etCharityLicenseNumberLogin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:autofillHints="phone"
+        android:hint="License Number"
+        android:inputType="number"
+        android:padding="10dp"
+        android:layout_marginTop="16dp"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter your license number as well to login as a charity"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="6dp"
+        android:textColor="@color/black"/>
+
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
