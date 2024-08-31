@@ -29,6 +29,7 @@ public class SimulationPaymentActivity extends Activity {
     private Button buttonConfirmPayment;
     private Button buttonCancelPayment;
     private CheckBox checkBoxAnonymous;
+    private CheckBox checkBoxCampaign;
 
     private int licenseNumber;
 
@@ -41,19 +42,21 @@ public class SimulationPaymentActivity extends Activity {
         buttonConfirmPayment = findViewById(R.id.buttonConfirmPayment);
         buttonCancelPayment = findViewById(R.id.buttonCancelPayment);
         checkBoxAnonymous = findViewById(R.id.checkBoxAnonymous);
+        checkBoxCampaign = findViewById(R.id.checkBoxCampaign); // Initialize the campaign checkbox
 
         licenseNumber = getIntent().getIntExtra("licenseNumber", -1);
 
         buttonConfirmPayment.setOnClickListener(v -> {
             double amount = Double.parseDouble(editTextAmount.getText().toString());
             boolean isAnonymous = checkBoxAnonymous.isChecked(); // Check if anonymous
-            handlePayment(true, amount, isAnonymous); // Pass isAnonymous to handlePayment
+            boolean isCampaign = checkBoxCampaign.isChecked(); // Check if campaign
+            handlePayment(true, amount, isAnonymous, isCampaign); // Pass isCampaign to handlePayment
         });
 
-        buttonCancelPayment.setOnClickListener(v -> handlePayment(false, 0, false));
+        buttonCancelPayment.setOnClickListener(v -> handlePayment(false, 0, false, false));
     }
 
-    private void handlePayment(boolean paymentStatus, double amount, boolean isAnonymous) {
+    private void handlePayment(boolean paymentStatus, double amount, boolean isAnonymous, boolean isCampaign) {
         // Retrieve the logged-in user's ID from shared preferences
         SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId", -1);
@@ -95,6 +98,11 @@ public class SimulationPaymentActivity extends Activity {
                     // Add donation to donor's donation list
                     addDonationToDonor(userId, donation);
 
+                    // If it's a campaign donation, update the currentAmount
+                    if (isCampaign) {
+                        updateCampaignAmount(licenseNumber, amount);
+                    }
+
                     // Return the result to the CharityProfileActivity
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra("paymentStatus", paymentStatus);
@@ -113,6 +121,58 @@ public class SimulationPaymentActivity extends Activity {
         });
     }
 
+    private void updateCampaignAmount(int licenseNumber, double amount) {
+        // Retrieve the campaign from the charity's node using the license number
+        DatabaseReference charityCampaignRef = FirebaseDatabase.getInstance().getReference("charities")
+                .child(String.valueOf(licenseNumber)).child("campaign");
+
+        charityCampaignRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Save the campaign object to a variable
+                    Campaign campaign = dataSnapshot.getValue(Campaign.class);
+
+                    if (campaign != null) {
+                        // Extract the doneeUserId from the campaign
+                        int doneeUserId = campaign.getUserId();
+
+                        // Update the campaign's currentAmount in the donee's node
+                        DatabaseReference doneeCampaignRef = FirebaseDatabase.getInstance().getReference("users")
+                                .child(String.valueOf(doneeUserId)).child("campaign");
+
+                        doneeCampaignRef.child("currentAmount").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                double currentAmount = snapshot.exists() ? snapshot.getValue(Double.class) : 0.0;
+                                double updatedAmount = currentAmount + amount;
+                                doneeCampaignRef.child("currentAmount").setValue(updatedAmount);
+
+                                // Also update the currentAmount in the charity's campaign node
+                                charityCampaignRef.child("currentAmount").setValue(updatedAmount);
+                                Toast.makeText(SimulationPaymentActivity.this, "Donated successfully!", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                // Handle the error
+                            }
+                        });
+                    }
+                } else {
+                    // Handle case where campaign doesn't exist
+                    Toast.makeText(SimulationPaymentActivity.this, "Campaign not found.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle the error
+            }
+        });
+    }
+
+
 
     private void addDonationToDonor(int userId, Donation donation) {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(String.valueOf(userId));
@@ -121,3 +181,4 @@ public class SimulationPaymentActivity extends Activity {
         userRef.child("userDonations").child(donation.getDonationId()).setValue(donation);
     }
 }
+
