@@ -86,14 +86,25 @@
         <!-- Donate Now Button -->
         <Button
             android:id="@+id/buttonDonateNow"
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Donate Now"
             android:backgroundTint="@color/light_orange"
             android:textColor="@android:color/black"
-            android:layout_margin="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="35dp"
+            android:layout_below="@id/linearLayoutCharityTypeRating"/>
+
+        <Button
+            android:id="@+id/btnViewMessage"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/linearLayoutCharityTypeRating"
-            android:layout_centerHorizontal="true"/>
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="225dp"
+            android:text="View Message"
+            android:backgroundTint="@color/light_orange"
+            android:textColor="@android:color/black"/>
 
         <TextView
             android:id="@+id/textViewReviewsHeader"
