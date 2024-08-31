@@ -24,6 +24,18 @@
             android:name=".AccountTypeActivity"
             android:exported="false" />
         <activity
+            android:name=".CharitySendMessageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CharityMessagesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CharityProfilePreviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateCharityProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".CharityManagementActivity"
             android:exported="false" />
         <activity
