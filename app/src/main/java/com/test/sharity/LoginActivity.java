@@ -164,6 +164,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("userId", user.getUserId());
+        editor.putString("userType", user.getUserType());
         editor.putString("userName", user.getUserName());
         editor.putString("userEmail", user.getUserEmail());
         editor.putString("phoneNumber", user.getUserPhoneNumber());
