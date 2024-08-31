@@ -43,7 +43,7 @@ public class CharityProfileActivity extends AppCompatActivity {
     private TextView textViewSeeAllReviews;
     private EditText editTextReview;
     private RatingBar ratingBarReview;
-    private Button buttonDonateNow, btnFollow, btnSubmitReview, btnNavigateToCharity;
+    private Button buttonDonateNow, btnFollow, btnSubmitReview, btnNavigateToCharity, btnViewMessage;
     private Charity charity;
     private int licenseNumber;
     private DatabaseReference userRef;
@@ -71,6 +71,7 @@ public class CharityProfileActivity extends AppCompatActivity {
         btnFollow = findViewById(R.id.btnFollow);
         btnSubmitReview = findViewById(R.id.btnSubmitReview);
         btnNavigateToCharity = findViewById(R.id.btnNavigateToCharity);
+        btnViewMessage = findViewById(R.id.btnViewMessage);
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
@@ -103,6 +104,12 @@ public class CharityProfileActivity extends AppCompatActivity {
         });
 
         imageViewReportCharity.setOnClickListener(v -> showReportCharityDialog());
+
+        btnViewMessage.setOnClickListener(v -> {
+            Intent intent = new Intent(CharityProfileActivity.this, CharityMessagesActivity.class);
+            intent.putExtra("licenseNumber", licenseNumber); // Pass the license number to the next activity
+            startActivity(intent);
+        });
     }
 
     // Fetch current user details from Firebase
