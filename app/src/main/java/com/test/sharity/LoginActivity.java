@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Store charity info in shared preferences
                             SharedPreferences sharedPreferences = getSharedPreferences("CharityDetails", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putInt("charityId", charity.getLicenseNumber());
+                            editor.putInt("charityLicenseNumber", charity.getLicenseNumber());
                             editor.putString("charityName", charity.getCharityName());
                             editor.putString("charityEmail", charity.getCharityEmail());
                             editor.apply();
