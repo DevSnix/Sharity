@@ -22,6 +22,7 @@ public class Charity {
     private Campaign campaign;
     private float rating;
     private HashMap<String, Review> reviews;
+    private HashMap<String, Message> messages;
 
     //if charityStatus = false -> charity account is not active, otherwise it is active (true)
     private boolean charityStatus;
@@ -141,6 +142,14 @@ public class Charity {
 
     public HashMap<String, Review> getReviews() {
         return reviews;
+    }
+
+    public HashMap<String, Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(HashMap<String, Message> messages) {
+        this.messages = messages;
     }
 
     public void setReviews(HashMap<String, Review> reviews) {

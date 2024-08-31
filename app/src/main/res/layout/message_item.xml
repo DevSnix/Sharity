@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/message_item_background"
+    android:layout_marginBottom="8dp">
+
+    <!-- Title of the message -->
+    <TextView
+        android:id="@+id/textViewMessageTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Message Title"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
+
+    <!-- Content of the message -->
+    <TextView
+        android:id="@+id/textViewMessageContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Message content goes here."
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="4dp" />
+
+    <!-- Timestamp of the message -->
+    <TextView
+        android:id="@+id/textViewMessageTimestamp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date and Time"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginTop="4dp" />
+
+</LinearLayout>
