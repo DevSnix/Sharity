@@ -13,7 +13,7 @@
         <clip>
             <shape>
                 <corners android:radius="8dp"/>
-                <solid android:color="#FF5722"/> <!-- Orange color for progress -->
+                <solid android:color="@color/dark_green"/> <!-- Orange color for progress -->
             </shape>
         </clip>
     </item>
