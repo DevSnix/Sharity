@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UpdateCharityProfileActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <!-- Profile Picture -->
+        <ImageView
+            android:id="@+id/imageUpdateCharityProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/charity_image"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <!-- Update Profile Picture Button -->
+        <Button
+            android:id="@+id/btnUpdateProfilePicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="@color/light_orange"
+            android:padding="12dp"
+            android:text="Choose Picture"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_below="@id/imageUpdateCharityProfile"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"/>
+
+        <!-- User Details Section -->
+        <EditText
+            android:id="@+id/etCharityPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="New Password"
+            android:inputType="textPassword"
+            android:layout_below="@id/btnUpdateProfilePicture"/>
+
+        <EditText
+            android:id="@+id/etCharityEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:layout_below="@id/etCharityPassword"/>
+
+        <EditText
+            android:id="@+id/etCharityPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="Phone Number"
+            android:inputType="phone"
+            android:layout_below="@id/etCharityEmail"/>
+
+        <EditText
+            android:id="@+id/etCharityAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="Address"
+            android:inputType="textPostalAddress"
+            android:layout_below="@id/etCharityPhoneNumber"/>
+
+        <EditText
+            android:id="@+id/etCharityDescription"
+            android:layout_width="370dp"
+            android:layout_height="wrap_content"
+            android:hint="Enter your description here"
+            android:inputType="textMultiLine"
+            android:lines="10"
+            android:layout_centerHorizontal="true"
+            android:gravity="top"
+            android:background="@android:drawable/edit_text"
+            android:layout_below="@+id/etCharityAddress"
+            tools:ignore="Autofill,HardcodedText" />
+
+        <!-- Save and Exit Button -->
+        <Button
+            android:id="@+id/btnSaveAndExit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/light_orange"
+            android:padding="16dp"
+            android:text="Save and Exit"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_below="@id/etCharityDescription"/>
+
+        <TextView
+            android:id="@+id/tvReloginNotice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="16dp"
+            android:text="Re-login to see changes"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:layout_below="@id/btnSaveAndExit"/>
+    </RelativeLayout>
+
+</ScrollView>
+
+

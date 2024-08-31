@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="@color/white"
+    android:padding="16dp"
     tools:context=".CharityManagementActivity">
 
     <!-- Header Text: Welcome + Charity's Name -->
@@ -13,153 +13,153 @@
         android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome CharityName"
-        android:textSize="24sp"
-        android:textColor="@color/black"
         android:layout_marginBottom="24dp"
-        android:textStyle="bold"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="Welcome CharityName"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Update Profile and Profile Preview Buttons, aligned symmetrically -->
     <Button
-        android:id="@+id/btnUpdateProfile"
+        android:id="@+id/btnUpdateCharityProfile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Update Profile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnProfilePreview"
-        app:layout_constraintTop_toBottomOf="@id/tvWelcome"
-        android:layout_marginEnd="8dp"
         android:layout_marginVertical="50dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/light_orange"
+        android:text="Update Profile"
         android:textColor="@color/black"
-        android:backgroundTint="@color/light_orange"/>
+        app:layout_constraintEnd_toStartOf="@id/btnProfilePreview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
 
     <Button
         android:id="@+id/btnProfilePreview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Profile Preview"
-        app:layout_constraintStart_toEndOf="@id/btnUpdateProfile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvWelcome"
-        android:layout_marginStart="8dp"
         android:layout_marginVertical="50dp"
+        android:layout_marginStart="8dp"
+        android:backgroundTint="@color/light_orange"
+        android:text="Profile Preview"
         android:textColor="@color/black"
-        android:backgroundTint="@color/light_orange"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnUpdateCharityProfile"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
 
     <!-- Update Message and View All Donations Buttons, aligned symmetrically -->
     <Button
         android:id="@+id/btnUpdateMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Update Message"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnViewDonations"
-        app:layout_constraintTop_toBottomOf="@id/btnUpdateProfile"
+        android:layout_marginVertical="50dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginVertical="50dp"
+        android:backgroundTint="@color/light_orange"
+        android:text="Update Message"
         android:textColor="@color/black"
-        android:backgroundTint="@color/light_orange"/>
+        app:layout_constraintEnd_toStartOf="@id/btnViewDonations"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnUpdateCharityProfile" />
 
     <Button
         android:id="@+id/btnViewDonations"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="View Donations"
-        app:layout_constraintStart_toEndOf="@id/btnUpdateMessage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnProfilePreview"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="8dp"
         android:layout_marginVertical="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/light_orange"
+        android:text="View Donations"
         android:textColor="@color/black"
-        android:backgroundTint="@color/light_orange"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnUpdateMessage"
+        app:layout_constraintTop_toBottomOf="@id/btnProfilePreview" />
 
     <!-- Start Campaign, View Campaign, End Campaign Buttons, aligned symmetrically -->
     <Button
         android:id="@+id/btnStartCampaign"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Start Campaign"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnViewCampaign"
-        app:layout_constraintTop_toBottomOf="@id/btnViewDonations"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/light_orange"
+        android:text="Start Campaign"
         android:textColor="@color/black"
-        android:backgroundTint="@color/light_orange"/>
+        app:layout_constraintEnd_toStartOf="@id/btnViewCampaign"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnViewDonations" />
 
     <Button
         android:id="@+id/btnViewCampaign"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="View Campaign"
-        app:layout_constraintStart_toEndOf="@id/btnStartCampaign"
-        app:layout_constraintEnd_toStartOf="@id/btnEndCampaign"
-        app:layout_constraintTop_toBottomOf="@id/btnViewDonations"
-        android:layout_marginTop="50dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/light_orange"
+        android:text="View Campaign"
         android:textColor="@color/black"
-        android:backgroundTint="@color/light_orange"/>
+        app:layout_constraintEnd_toStartOf="@id/btnEndCampaign"
+        app:layout_constraintStart_toEndOf="@id/btnStartCampaign"
+        app:layout_constraintTop_toBottomOf="@id/btnViewDonations" />
 
     <Button
         android:id="@+id/btnEndCampaign"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="End Campaign"
-        app:layout_constraintStart_toEndOf="@id/btnViewCampaign"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnViewDonations"
-        android:layout_marginTop="50dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/light_orange"
+        android:text="End Campaign"
         android:textColor="@color/black"
-        android:backgroundTint="@color/light_orange"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnViewCampaign"
+        app:layout_constraintTop_toBottomOf="@id/btnViewDonations" />
 
     <!-- Progress Bar for Campaign Progress -->
     <ProgressBar
         android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:progressDrawable="@drawable/custom_progressbar"
-        android:max="100"
-        app:layout_constraintTop_toBottomOf="@id/btnEndCampaign"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:max="100"
+        android:progressDrawable="@drawable/custom_progressbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnEndCampaign" />
 
     <!-- Progress Bar Text: showing current amount / target amount -->
     <TextView
         android:id="@+id/tvProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
         android:text="Current: 0 / Target: 1000"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/progressBar"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progressBar" />
 
     <!-- Logout Button moved to bottom -->
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Log Out"
+        android:layout_marginBottom="8dp"
         android:backgroundTint="@color/light_orange"
+        android:text="Log Out"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="8dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

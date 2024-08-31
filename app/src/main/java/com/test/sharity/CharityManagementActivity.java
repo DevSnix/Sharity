@@ -10,17 +10,35 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class CharityManagementActivity extends AppCompatActivity {
 
-    Button btnLogout;
+    Button btnLogout, btnUpdateCharityProfile, btnProfilePreview, btnUpdateMessage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.charity_profile_management);
 
+        btnUpdateCharityProfile = findViewById(R.id.btnUpdateCharityProfile);
+        btnProfilePreview = findViewById(R.id.btnProfilePreview);
+        btnUpdateMessage = findViewById(R.id.btnUpdateMessage);
         btnLogout = findViewById(R.id.btnLogout);
 
-        // Clear shared preferences when logging out
+        btnUpdateCharityProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(this, UpdateCharityProfileActivity.class);
+            startActivity(intent);
+        });
+
+        btnProfilePreview.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CharityProfilePreviewActivity.class);
+            startActivity(intent);
+        });
+
+        btnUpdateMessage.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CharitySendMessageActivity.class);
+            startActivity(intent);
+        });
+
         btnLogout.setOnClickListener(v -> {
+            // Clear shared preferences when logging out
             SharedPreferences sharedPreferences = getSharedPreferences("CharityDetails", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
