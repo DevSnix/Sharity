@@ -43,7 +43,7 @@ public class CharityProfileActivity extends AppCompatActivity {
     private TextView textViewSeeAllReviews;
     private EditText editTextReview;
     private RatingBar ratingBarReview;
-    private Button buttonDonateNow, btnFollow, btnSubmitReview, btnNavigateToCharity, btnViewMessage;
+    private Button buttonDonateNow, btnFollow, btnSubmitReview, btnViewMessage;
     private Charity charity;
     private int licenseNumber;
     private DatabaseReference userRef;
@@ -51,6 +51,8 @@ public class CharityProfileActivity extends AppCompatActivity {
     private boolean isFollowing;
     private DatabaseReference charityRef;
     private User currentUser;
+    private Button btnViewCampaign;
+    private String userType;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,12 +72,13 @@ public class CharityProfileActivity extends AppCompatActivity {
         buttonDonateNow = findViewById(R.id.buttonDonateNow);
         btnFollow = findViewById(R.id.btnFollow);
         btnSubmitReview = findViewById(R.id.btnSubmitReview);
-        btnNavigateToCharity = findViewById(R.id.btnNavigateToCharity);
         btnViewMessage = findViewById(R.id.btnViewMessage);
+        btnViewCampaign = findViewById(R.id.btnViewCampaign);
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         userId = String.valueOf(sharedPreferences.getInt("userId", -1));
+        userType = sharedPreferences.getString("userType", "");
         userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
 
         // Fetch current user details
@@ -87,9 +90,11 @@ public class CharityProfileActivity extends AppCompatActivity {
         }
 
         buttonDonateNow.setOnClickListener(v -> {
-            Intent intent = new Intent(CharityProfileActivity.this, SimulationPaymentActivity.class);
-            intent.putExtra("licenseNumber", licenseNumber);
-            startActivity(intent);
+            if (userType.equals("Donor")) {
+                Intent intent = new Intent(CharityProfileActivity.this, SimulationPaymentActivity.class);
+                intent.putExtra("licenseNumber", licenseNumber);
+                startActivity(intent);
+            }
         });
 
         checkIfUserIsFollowing();
@@ -107,6 +112,12 @@ public class CharityProfileActivity extends AppCompatActivity {
 
         btnViewMessage.setOnClickListener(v -> {
             Intent intent = new Intent(CharityProfileActivity.this, CharityMessagesActivity.class);
+            intent.putExtra("licenseNumber", licenseNumber); // Pass the license number to the next activity
+            startActivity(intent);
+        });
+
+        btnViewCampaign.setOnClickListener(v ->{
+            Intent intent = new Intent(CharityProfileActivity.this, ViewCampaignActivity.class);
             intent.putExtra("licenseNumber", licenseNumber); // Pass the license number to the next activity
             startActivity(intent);
         });
