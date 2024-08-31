@@ -12,6 +12,8 @@ import java.util.Random;
 
 public class Campaign {
     private int campaignId;
+    private int charityId;
+    private int userId;
     private double targetAmount;
     private double currentAmount;
     private String description;
@@ -19,41 +21,119 @@ public class Campaign {
     private String endDate;
     private String imageUrl;
     private boolean isActive;
-    private Donee donee;
+    private String campaignTitle;
 
     public Campaign() {
 
     }
 
-    public Campaign(double targetAmount, String description, String startDate, String endDate, String imageUrl, Donee donee) {
+    public Campaign(double targetAmount, String description, String startDate, String endDate, String imageUrl, int charityId, int userId, String campaignTitle) {
         this.targetAmount = targetAmount;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
         this.imageUrl = imageUrl;
-        this.donee = donee;
         this.isActive = true;
         this.currentAmount = 0.0;
+        this.charityId = charityId;
+        this.userId = userId;
+        this.campaignTitle = campaignTitle;
         generateUniqueCampaignId();
     }
 
     private void generateUniqueCampaignId() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference campaignsRef = database.getReference("campaigns");
-        Random rand = new Random();
-        campaignsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int uniqueCampaignId;
-                do {
-                    uniqueCampaignId = rand.nextInt(100000);  // Generate a random campaign ID between 0 - 100,000
-                } while (snapshot.hasChild(String.valueOf(uniqueCampaignId)));
-                Campaign.this.campaignId = uniqueCampaignId;
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        String uniqueCampaignId = campaignsRef.push().getKey();  // Generate a unique key using push()
+        Campaign.this.campaignId = uniqueCampaignId.hashCode();  // Convert the unique key to a hash code for an integer ID
+    }
 
-            }
-        });
+
+    public int getCampaignId() {
+        return campaignId;
+    }
+
+    public void setCampaignId(int campaignId) {
+        this.campaignId = campaignId;
+    }
+
+    public int getCharityId() {
+        return charityId;
+    }
+
+    public void setCharityId(int charityId) {
+        this.charityId = charityId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public double getTargetAmount() {
+        return targetAmount;
+    }
+
+    public void setTargetAmount(double targetAmount) {
+        this.targetAmount = targetAmount;
+    }
+
+    public double getCurrentAmount() {
+        return currentAmount;
+    }
+
+    public void setCurrentAmount(double currentAmount) {
+        this.currentAmount = currentAmount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public String getCampaignTitle() {
+        return campaignTitle;
+    }
+
+    public void setCampaignTitle(String campaignTitle) {
+        this.campaignTitle = campaignTitle;
     }
 }
