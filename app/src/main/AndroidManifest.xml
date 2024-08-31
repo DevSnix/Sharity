@@ -27,6 +27,12 @@
             android:name=".CharityViewDonationsActivity"
             android:exported="false" />
         <activity
+            android:name=".StartCampaignActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewCampaignActivity"
+            android:exported="false" />
+        <activity
             android:name=".CharitySendMessageActivity"
             android:exported="false" />
         <activity

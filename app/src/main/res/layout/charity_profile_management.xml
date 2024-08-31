@@ -23,6 +23,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tvRaised"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Manage your charity activities below"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="24dp"/>
+
     <!-- Update Profile and Profile Preview Buttons, aligned symmetrically -->
     <Button
         android:id="@+id/btnUpdateCharityProfile"
@@ -35,7 +48,7 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@id/btnProfilePreview"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
+        app:layout_constraintTop_toBottomOf="@id/tvRaised" />
 
     <Button
         android:id="@+id/btnProfilePreview"
@@ -48,7 +61,7 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnUpdateCharityProfile"
-        app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
+        app:layout_constraintTop_toBottomOf="@id/tvRaised" />
 
     <!-- Update Message and View All Donations Buttons, aligned symmetrically -->
     <Button
@@ -107,46 +120,71 @@
         app:layout_constraintStart_toEndOf="@id/btnMessagesSent"
         app:layout_constraintTop_toBottomOf="@id/btnViewDonations" />
 
+    <!-- Divider Line -->
+    <View
+        android:id="@+id/dividerCampaign"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        app:layout_constraintTop_toBottomOf="@id/btnViewReviews"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Campaign Header -->
+    <TextView
+        android:id="@+id/tvCampaignHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Campaign"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/dividerCampaign"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
     <!-- Start Campaign, View Campaign, End Campaign Buttons, aligned symmetrically -->
     <Button
         android:id="@+id/btnStartCampaign"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/light_orange"
         android:text="Start Campaign"
         android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@id/btnViewCampaign"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnViewReviews" />
+        app:layout_constraintTop_toBottomOf="@id/tvCampaignHeader" />
 
     <Button
         android:id="@+id/btnViewCampaign"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/light_orange"
         android:text="View Campaign"
         android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@id/btnEndCampaign"
         app:layout_constraintStart_toEndOf="@id/btnStartCampaign"
-        app:layout_constraintTop_toBottomOf="@id/btnViewReviews" />
+        app:layout_constraintTop_toBottomOf="@id/tvCampaignHeader" />
 
     <Button
         android:id="@+id/btnEndCampaign"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/light_orange"
         android:text="End Campaign"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnViewCampaign"
-        app:layout_constraintTop_toBottomOf="@id/btnViewReviews" />
+        app:layout_constraintTop_toBottomOf="@id/tvCampaignHeader" />
 
     <!-- Progress Bar for Campaign Progress -->
     <ProgressBar
