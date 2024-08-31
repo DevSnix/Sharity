@@ -205,13 +205,13 @@
             android:layout_centerHorizontal="true"/>
 
         <Button
-            android:id="@+id/btnNavigateToCharity"
+            android:id="@+id/btnViewCampaign"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/btnSubmitReview"
             android:layout_marginTop="30dp"
             android:layout_centerHorizontal="true"
-            android:text="Navigate to Charity"
+            android:text="View Current Running Campaign"
             android:backgroundTint="@color/light_orange"
             android:textColor="@android:color/black" />
 
