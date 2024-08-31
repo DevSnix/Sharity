@@ -60,6 +60,12 @@ public class CharityManagementActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        btnViewDonations.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CharityViewDonationsActivity.class);
+            intent.putExtra("charityLicenseNumber", charityLicenseNumber);
+            startActivity(intent);
+        });
+
         btnMessagesSent.setOnClickListener(v -> {
             Intent intent = new Intent(this, CharityMessagesActivity.class);
             intent.putExtra("licenseNumber", charityLicenseNumber);

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <!-- Donation Amount in bold -->
+    <TextView
+        android:id="@+id/tvDonationAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Donation Amount: $100"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- User ID -->
+    <TextView
+        android:id="@+id/tvUserId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User ID: 12345"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/tvDonationAmount"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- User Name -->
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Name: John Doe"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/tvUserId"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- User Email -->
+    <TextView
+        android:id="@+id/tvUserEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Email: john@example.com"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/tvUserName"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- User Phone Number -->
+    <TextView
+        android:id="@+id/tvUserPhoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Phone Number: (123) 456-7890"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/tvUserEmail"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Donation Date -->
+    <TextView
+        android:id="@+id/tvDonationDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Donation Date: 01/01/2024"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/tvUserPhoneNumber"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Divider Line -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/gray"
+        app:layout_constraintTop_toBottomOf="@id/tvDonationDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

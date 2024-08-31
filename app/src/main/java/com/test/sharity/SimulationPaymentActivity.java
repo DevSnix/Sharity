@@ -19,6 +19,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class SimulationPaymentActivity extends Activity {
 
     private EditText editTextAmount;
@@ -72,6 +76,7 @@ public class SimulationPaymentActivity extends Activity {
                 if (charity != null) {
                     // Create the donation object and set the charity
                     Donation donation = new Donation();
+                    String donationDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
                     donation.setDonationId(donationId);
                     donation.setAmount(amount);
                     donation.setDonationStatus(paymentStatus);
@@ -82,6 +87,7 @@ public class SimulationPaymentActivity extends Activity {
                     donation.setAnonymous(isAnonymous);
                     donation.setDonationMessage("Thank you for your support!");
                     donation.setCharity(charity);
+                    donation.setDonationDate(donationDate);
 
                     // Save donation details to Firebase
                     donationsRef.child(donationId).setValue(donation);

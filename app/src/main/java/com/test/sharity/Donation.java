@@ -10,6 +10,7 @@ public class Donation {
     private String donationType;
     private boolean isAnonymous;
     private String donationMessage;
+    private String donationDate;
     private Donor donor;
     private Charity charity;
 
@@ -121,4 +122,13 @@ public class Donation {
     public void setCharity(Charity charity) {
         this.charity = charity;
     }
+
+    public String getDonationDate() {
+        return donationDate;
+    }
+
+    public void setDonationDate(String donationDate) {
+        this.donationDate = donationDate;
+    }
+
 }

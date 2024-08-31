@@ -36,5 +36,7 @@
     <color name="orange300">#FFB74D</color>
     <color name="orange200">#FFCC80</color>
     <color name="gray600">#757575</color>
+    <color name="gray">#CCCCCC</color>
+
 
 </resources>
