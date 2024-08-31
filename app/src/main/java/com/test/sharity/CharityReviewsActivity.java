@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class CharityReviewsActivity extends AppCompatActivity {
     private ReviewsAdapter reviewsAdapter;
     private List<Review> reviewList;
     private ImageView backButton;
+    DatabaseReference reviewsRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,7 @@ public class CharityReviewsActivity extends AppCompatActivity {
 
 
     private void loadReviews(int licenseNumber) {
-        DatabaseReference reviewsRef = FirebaseDatabase.getInstance().getReference("charities")
+        reviewsRef = FirebaseDatabase.getInstance().getReference("charities")
                 .child(String.valueOf(licenseNumber)).child("reviews");
 
         reviewsRef.addValueEventListener(new ValueEventListener() {
