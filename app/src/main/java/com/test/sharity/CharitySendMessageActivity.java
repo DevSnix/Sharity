@@ -3,9 +3,10 @@ package com.test.sharity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -25,6 +26,7 @@ public class CharitySendMessageActivity extends AppCompatActivity {
     private EditText etMessageTitle;
     private EditText etMessageContent;
     private Button btnSendMessage;
+    private ImageView backButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,13 +36,14 @@ public class CharitySendMessageActivity extends AppCompatActivity {
         etMessageTitle = findViewById(R.id.et_message_title);
         etMessageContent = findViewById(R.id.et_message_content);
         btnSendMessage = findViewById(R.id.btn_send_message);
+        backButton = findViewById(R.id.backButton);
         SharedPreferences sharedPreferences = getSharedPreferences("CharityDetails", MODE_PRIVATE);
         licenseNumber = sharedPreferences.getInt("charityLicenseNumber", -1);
         stringLicenseNumber = String.valueOf(licenseNumber);
         charityRef = FirebaseDatabase.getInstance().getReference("charities").child(stringLicenseNumber);
 
-        // Set click listener on the send button
         btnSendMessage.setOnClickListener(v -> sendMessageToFollowers());
+        backButton.setOnClickListener(v -> onBackPressed());
     }
 
     private void sendMessageToFollowers() {
@@ -77,4 +80,10 @@ public class CharitySendMessageActivity extends AppCompatActivity {
             Toast.makeText(CharitySendMessageActivity.this, "Please enter a title and message before sending.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed(); // This will finish the activity and go back
+    }
+
 }
