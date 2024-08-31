@@ -43,9 +43,7 @@ public class UserUpdateProfileActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", MODE_PRIVATE);
         userIdInt = sharedPreferences.getInt("userId", -1);
         userId = String.valueOf(userIdInt); // Convert to String
-        Log.d("UserUpdateProfileActivity", "Retrieved userId: $userId, Type: ${userId?.javaClass}");
         userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
-
 
         loadUserDataFromDatabase();
 
@@ -54,7 +52,7 @@ public class UserUpdateProfileActivity extends AppCompatActivity {
 
         // Handle save and exit
         btnSaveAndExit.setOnClickListener(v -> {
-            saveUserDataToDatabase();
+            updateUserDataInDatabase();
         });
     }
 
@@ -110,7 +108,7 @@ public class UserUpdateProfileActivity extends AppCompatActivity {
     }
 
     // Save updated user data to Firebase Realtime Database
-    private void saveUserDataToDatabase() {
+    private void updateUserDataInDatabase() {
         String newPassword = etUserPassword.getText().toString();
         String newEmail = etUserEmail.getText().toString();
         String newPhoneNumber = etUserPhoneNumber.getText().toString();
