@@ -6,6 +6,7 @@ import java.util.List;
 public class Donee extends User {
     private String donationRequestDescription;
     private String charityType;
+    private Campaign campaign;
     private List<Charity> followedCharities;
 
     // Default constructor for Firebase
@@ -41,5 +42,13 @@ public class Donee extends User {
 
     public void setDonationRequestDescription(String donationRequestDescription) {
         this.donationRequestDescription = donationRequestDescription;
+    }
+
+    public Campaign getCampaign() {
+        return campaign;
+    }
+
+    public void setCampaign(Campaign campaign) {
+        this.campaign = campaign;
     }
 }
