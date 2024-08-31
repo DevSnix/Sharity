@@ -42,6 +42,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         holder.textViewMessageTimestamp.setText(formattedDate);
     }
 
+    // Return the number of items in the list
     @Override
     public int getItemCount() {
         return messagesList.size();

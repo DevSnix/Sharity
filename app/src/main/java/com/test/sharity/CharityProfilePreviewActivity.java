@@ -29,7 +29,7 @@ public class CharityProfilePreviewActivity extends AppCompatActivity {
     private TextView textViewCharityDescription;
     private TextView textViewMostRecentReview;
     private TextView textViewSeeAllReviews;
-    private Button btnNavigateToCharity;
+    private Button btnNavigateToCharity, btnViewMessage;
     private int licenseNumber;
     private String stringLicenseNumber;
     private DatabaseReference charityRef;
@@ -47,6 +47,7 @@ public class CharityProfilePreviewActivity extends AppCompatActivity {
         textViewMostRecentReview = findViewById(R.id.textViewMostRecentReview);
         textViewSeeAllReviews = findViewById(R.id.textViewSeeAllReviews);
         btnNavigateToCharity = findViewById(R.id.btnNavigateToCharity);
+        btnViewMessage = findViewById(R.id.btnViewMessage);
 
         SharedPreferences sharedPreferences = getSharedPreferences("CharityDetails", MODE_PRIVATE);
         licenseNumber = sharedPreferences.getInt("charityLicenseNumber", -1);
@@ -54,6 +55,12 @@ public class CharityProfilePreviewActivity extends AppCompatActivity {
         charityRef = FirebaseDatabase.getInstance().getReference("charities").child(stringLicenseNumber);
 
         loadCharityDataFromDatabase();
+
+        btnViewMessage.setOnClickListener(v -> {
+            Intent intent = new Intent(CharityProfilePreviewActivity.this, CharityMessagesActivity.class);
+            intent.putExtra("licenseNumber", licenseNumber); // Pass the license number to the next activity
+            startActivity(intent);
+        });
 
         textViewSeeAllReviews.setOnClickListener(v -> {
             Intent intent = new Intent(CharityProfilePreviewActivity.this, CharityReviewsActivity.class);

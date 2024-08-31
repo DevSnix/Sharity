@@ -1,6 +1,5 @@
 package com.test.sharity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -27,6 +26,7 @@ public class CharityMessagesActivity extends AppCompatActivity {
     private RecyclerView recyclerViewMessages;
     private MessagesAdapter messagesAdapter;
     private List<Message> messagesList;
+    private DatabaseReference charityRef;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,8 +36,7 @@ public class CharityMessagesActivity extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
         recyclerViewMessages = findViewById(R.id.recyclerViewMessages);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("CharityDetails", MODE_PRIVATE);
-        licenseNumber = sharedPreferences.getInt("charityLicenseNumber", -1);
+        licenseNumber = getIntent().getIntExtra("licenseNumber", -1);
         stringLicenseNumber = String.valueOf(licenseNumber);
 
         messagesList = new ArrayList<>();
@@ -51,7 +50,7 @@ public class CharityMessagesActivity extends AppCompatActivity {
     }
 
     private void loadMessages() {
-        DatabaseReference charityRef = FirebaseDatabase.getInstance()
+        charityRef = FirebaseDatabase.getInstance()
                 .getReference("charities")
                 .child(stringLicenseNumber)
                 .child("messages");
