@@ -29,7 +29,7 @@ public class CharityProfilePreviewActivity extends AppCompatActivity {
     private TextView textViewCharityDescription;
     private TextView textViewMostRecentReview;
     private TextView textViewSeeAllReviews;
-    private Button btnNavigateToCharity, btnViewMessage;
+    private Button btnViewMessage;
     private int licenseNumber;
     private String stringLicenseNumber;
     private DatabaseReference charityRef;
@@ -46,7 +46,6 @@ public class CharityProfilePreviewActivity extends AppCompatActivity {
         textViewCharityDescription = findViewById(R.id.textViewCharityDescription);
         textViewMostRecentReview = findViewById(R.id.textViewMostRecentReview);
         textViewSeeAllReviews = findViewById(R.id.textViewSeeAllReviews);
-        btnNavigateToCharity = findViewById(R.id.btnNavigateToCharity);
         btnViewMessage = findViewById(R.id.btnViewMessage);
 
         SharedPreferences sharedPreferences = getSharedPreferences("CharityDetails", MODE_PRIVATE);
