@@ -26,7 +26,7 @@ public class ProfileFragment extends Fragment {
     private ImageView ivProfilePicture;
     private TextView tvUsername, tvEmail, tvPhoneNumber;
     private DatabaseReference userDatabase;
-    private Button btnLogout, btnDeleteAccount, btnUpdateProfile;
+    private Button btnLogout, btnDeleteAccount, btnUpdateProfile, btnFAQ;
 
     @Nullable
     @Override
@@ -41,6 +41,7 @@ public class ProfileFragment extends Fragment {
         btnLogout = view.findViewById(R.id.btnLogout);
         btnUpdateProfile = view.findViewById(R.id.btnUpdateProfile);
         btnDeleteAccount = view.findViewById(R.id.btnDeleteAccount);
+        btnFAQ = view.findViewById(R.id.btnFAQ);
 
 
         // Retrieve user details from SharedPreferences
@@ -116,6 +117,12 @@ public class ProfileFragment extends Fragment {
                     })
                     .create()
                     .show();
+        });
+
+        btnFAQ.setOnClickListener(v -> {
+            // Navigate to the FAQActivity
+            Intent intent = new Intent(getActivity(), FAQActivity.class);
+            startActivity(intent);
         });
 
         return view;

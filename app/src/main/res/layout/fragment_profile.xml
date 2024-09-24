@@ -105,4 +105,18 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/btnFAQ"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnDeleteAccount"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/light_orange"
+        android:padding="12dp"
+        android:layout_centerHorizontal="true"
+        android:text="FAQ"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
 </RelativeLayout>
