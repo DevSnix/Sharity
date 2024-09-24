@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
 
+        <!-- Back Button -->
         <ImageView
             android:id="@+id/backButton"
             android:layout_width="30dp"
@@ -19,6 +19,7 @@
             android:background="@android:color/transparent"
             android:src="@drawable/ic_back" />
 
+        <!-- Send Message Title -->
         <TextView
             android:id="@+id/tv_send_message_title"
             android:layout_width="wrap_content"
@@ -29,9 +30,26 @@
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
+        <!-- ImageView to open the gallery -->
+        <ImageView
+            android:id="@+id/imageViewSelectImage"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_gallery" /> <!-- Add your gallery icon here -->
     </RelativeLayout>
 
-    <!-- Big Multi-line TextView for message content -->
+    <!-- ImageView to display selected image -->
+    <ImageView
+        android:id="@+id/selectedImageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone" /> <!-- Initially hidden until an image is selected -->
+
+    <!-- Message Title -->
     <EditText
         android:id="@+id/et_message_title"
         android:layout_width="match_parent"
@@ -43,7 +61,7 @@
         android:textSize="16sp"
         android:layout_marginBottom="12dp" />
 
-    <!-- Big Multi-line EditText for message content -->
+    <!-- Message Content -->
     <EditText
         android:id="@+id/et_message_content"
         android:layout_width="match_parent"

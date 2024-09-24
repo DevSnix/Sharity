@@ -5,13 +5,15 @@ public class Message {
     private String content;
     private long timestamp;
     private String key;
+    private String imageUrl;
 
     public Message() {}
 
-    public Message(String title, String content, long timestamp) {
+    public Message(String title, String content, long timestamp, String imageUrl) {
         this.title = title;
         this.content = content;
         this.timestamp = timestamp;
+        this.imageUrl = imageUrl;
     }
 
     public String getTitle() {
@@ -44,5 +46,13 @@ public class Message {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
