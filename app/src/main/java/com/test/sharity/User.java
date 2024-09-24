@@ -138,17 +138,17 @@ public class User {
             }
         });
     }
-    //Retrieve default picture from database and set it to the user, then save the user to the database
-    private void setDefaultPictureAndSaveUser() {
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference("profile_pictures/default profile picture.png");
 
-        storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-            String downloadUrl = uri.toString();
-            setProfilePictureUrl(downloadUrl);
-            saveToFirebase();
-        }).addOnFailureListener(e -> {
-            // Handle the failure
-        });
+    // Set a default picture URL directly and save the user to the database
+    private void setDefaultPictureAndSaveUser() {
+        // Using the provided URL for the default profile picture
+        String defaultPictureUrl = "https://firebasestorage.googleapis.com/v0/b/sharity-5e06e.appspot.com/o/profile_pictures%2Fdefault%20profile%20picture.png?alt=media&token=55ab750a-6563-4278-b3fe-fd7a884f7692";
+
+        // Set the default picture URL
+        setProfilePictureUrl(defaultPictureUrl);
+
+        // Save the user to Firebase
+        saveToFirebase();
     }
     //Save user to Firebase Realtime Database
     public void saveToFirebase() {

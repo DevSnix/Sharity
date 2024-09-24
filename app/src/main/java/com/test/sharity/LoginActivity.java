@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,7 +75,9 @@ public class LoginActivity extends AppCompatActivity {
         usersRef.orderByChild("userEmail").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("FirebaseDebug", "DataSnapshot exists: " + dataSnapshot.exists());
                 if (dataSnapshot.exists()) {
+                    Log.d("FirebaseDebug", "DataSnapshot: " + dataSnapshot.getValue());
                     for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                         User user = userSnapshot.getValue(User.class);
                         if (user != null && user.getUserPassword().equals(password)) {
@@ -104,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 } else {
+                    Log.d("FirebaseDebug", "User not found: " + email);
                     Toast.makeText(LoginActivity.this, "User not found", Toast.LENGTH_SHORT).show();
                 }
             }

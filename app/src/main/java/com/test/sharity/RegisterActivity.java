@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void registerUser() {
         String username = etUsername.getText().toString().trim();
-        String email = etEmail.getText().toString().trim();
+        String email = etEmail.getText().toString().trim().toLowerCase();
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
         String address = etAddress.getText().toString().trim();
@@ -97,36 +97,34 @@ public class RegisterActivity extends AppCompatActivity {
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(intent);
         }
-        else if(selectedAccountType.equalsIgnoreCase("Donee")) {
+        else if (selectedAccountType.equalsIgnoreCase("Donee")) {
             Donee newDonee = new Donee(username, password, selectedAccountType, email, phoneNumber, address);
 
-            // After saving to Firebase, pass the userId to DoneeRegisterRequestActivity and go to it
+            // Save the user object to Firebase
             FirebaseDatabase.getInstance().getReference("users").child(String.valueOf(newDonee.getUserId()))
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                // Save userId to SharedPreferences
-                                SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putInt("userId", newDonee.getUserId());
-                                editor.apply();
+                    .setValue(newDonee)
+                    .addOnCompleteListener(saveTask -> {
+                        if (saveTask.isSuccessful()) {
+                            // Remove the unwanted node after saving the correct user
+                            FirebaseDatabase.getInstance().getReference("users").child("0").removeValue();
 
-                                // Navigate to the next activity after the userId has been saved
-                                Intent intent = new Intent(RegisterActivity.this, DoneeRegisterRequestActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(RegisterActivity.this, "Failed to register user", Toast.LENGTH_SHORT).show();
-                            }
-                        }
+                            // Save userId to SharedPreferences
+                            SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt("userId", newDonee.getUserId());
+                            editor.apply();
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(RegisterActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                            // Navigate to the next activity after the userId has been saved
+                            Intent intent = new Intent(RegisterActivity.this, DoneeRegisterRequestActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "Failed to register user", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
+
+
 
     }
 }
