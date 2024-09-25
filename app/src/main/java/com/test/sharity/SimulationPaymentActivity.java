@@ -1,17 +1,25 @@
 package com.test.sharity;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -30,6 +39,9 @@ public class SimulationPaymentActivity extends Activity {
     private Button buttonCancelPayment;
     private CheckBox checkBoxAnonymous;
     private CheckBox checkBoxCampaign;
+    private CheckBox checkBoxReminder;
+    private DatePicker datePickerReminder;
+    private static final int REQUEST_CODE_POST_NOTIFICATIONS = 1;
 
     private int licenseNumber;
 
@@ -42,18 +54,43 @@ public class SimulationPaymentActivity extends Activity {
         buttonConfirmPayment = findViewById(R.id.buttonConfirmPayment);
         buttonCancelPayment = findViewById(R.id.buttonCancelPayment);
         checkBoxAnonymous = findViewById(R.id.checkBoxAnonymous);
-        checkBoxCampaign = findViewById(R.id.checkBoxCampaign); // Initialize the campaign checkbox
+        checkBoxCampaign = findViewById(R.id.checkBoxCampaign);
+        checkBoxReminder = findViewById(R.id.checkBoxReminder);
+        datePickerReminder = findViewById(R.id.datePickerReminder);
 
         licenseNumber = getIntent().getIntExtra("licenseNumber", -1);
 
         buttonConfirmPayment.setOnClickListener(v -> {
-            double amount = Double.parseDouble(editTextAmount.getText().toString());
-            boolean isAnonymous = checkBoxAnonymous.isChecked(); // Check if anonymous
-            boolean isCampaign = checkBoxCampaign.isChecked(); // Check if campaign
-            handlePayment(true, amount, isAnonymous, isCampaign); // Pass isCampaign to handlePayment
+            String amountText = editTextAmount.getText().toString();
+
+            // Ensure the amount is a valid double and non-negative
+            if (!amountText.isEmpty()) {
+                double amount = Double.parseDouble(amountText);
+                if (amount <= 0) {
+                    Toast.makeText(SimulationPaymentActivity.this, "Please enter a positive amount.", Toast.LENGTH_SHORT).show();
+                } else {
+                    boolean isAnonymous = checkBoxAnonymous.isChecked();
+                    boolean isCampaign = checkBoxCampaign.isChecked();
+                    handlePayment(true, amount, isAnonymous, isCampaign);
+                }
+            } else {
+                Toast.makeText(SimulationPaymentActivity.this, "Please enter a valid amount.", Toast.LENGTH_SHORT).show();
+            }
         });
 
-        buttonCancelPayment.setOnClickListener(v -> handlePayment(false, 0, false, false));
+        buttonCancelPayment.setOnClickListener(v -> {
+            handlePayment(false, Double.parseDouble(editTextAmount.getText().toString()), false, false);
+        });
+
+        checkBoxReminder.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // Show the DatePicker if the reminder is checked
+                datePickerReminder.setVisibility(View.VISIBLE);
+            } else {
+                // Hide the DatePicker if the reminder is unchecked
+                datePickerReminder.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void handlePayment(boolean paymentStatus, double amount, boolean isAnonymous, boolean isCampaign) {
@@ -103,6 +140,15 @@ public class SimulationPaymentActivity extends Activity {
                         updateCampaignAmount(licenseNumber, amount);
                     }
 
+                    // If the user wants a reminder, check the checkbox and request permission
+                    if (checkBoxReminder.isChecked()) {
+                        requestNotificationPermission();  // Request notification permission
+                        // After permission is granted, schedule the reminder
+                        if (ContextCompat.checkSelfPermission(SimulationPaymentActivity.this, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                            scheduleReminder();  // Schedule the reminder for the selected date
+                        }
+                    }
+
                     // Return the result to the CharityProfileActivity
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra("paymentStatus", paymentStatus);
@@ -119,6 +165,26 @@ public class SimulationPaymentActivity extends Activity {
                 Toast.makeText(SimulationPaymentActivity.this, "Failed to retrieve charity data", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void scheduleReminder() {
+        // Get the selected date from the DatePicker
+        int day = datePickerReminder.getDayOfMonth();
+        int month = datePickerReminder.getMonth();
+        int year = datePickerReminder.getYear();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day, 9, 0); // Remind at 9 AM on the selected date
+
+        // Create an intent for the notification
+        Intent intent = new Intent(this, ReminderReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Schedule the alarm
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null) {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        }
     }
 
     private void updateCampaignAmount(int licenseNumber, double amount) {
@@ -172,13 +238,19 @@ public class SimulationPaymentActivity extends Activity {
         });
     }
 
-
-
     private void addDonationToDonor(int userId, Donation donation) {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(String.valueOf(userId));
 
         // Save the donation under the user's donations using the same donationId
         userRef.child("userDonations").child(donation.getDonationId()).setValue(donation);
+    }
+
+    private void requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, REQUEST_CODE_POST_NOTIFICATIONS);
+            }
+        }
     }
 }
 
