@@ -6,19 +6,16 @@ public class Review {
     private User user;
     private String date;
 
-    // No-argument constructor required for Firebase
     public Review() {
     }
 
-    // Constructor with arguments
     public Review(String reviewText, double rating, User user, String date) {
         this.reviewText = reviewText;
         this.rating = rating;
         this.user = user;
-        this.date = date; // Fix: Set date properly
+        this.date = date;
     }
 
-    // Getters and setters
     public String getReviewText() {
         return reviewText;
     }
