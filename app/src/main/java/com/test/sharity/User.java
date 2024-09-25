@@ -16,7 +16,6 @@ public class User {
     private String userEmail;
     private String userPhoneNumber;
     private String userAddress;
-    // If userStatus = false -> user is not active, otherwise it is active (true)
     private boolean userStatus;
     private String profilePictureUrl;
 
@@ -125,7 +124,7 @@ public class User {
                     userStatus = true;
                 }
                 else if (userType.equalsIgnoreCase("Donee")) {
-                    userStatus = false; //Account is not activated until admin grants approval of it
+                    userStatus = true; //Account is not activated until admin grants approval of it
                 }
                 setDefaultPictureAndSaveUser();
             }

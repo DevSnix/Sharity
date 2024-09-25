@@ -21,8 +21,6 @@ public class Charity {
     private float rating;
     private HashMap<String, Review> reviews;
     private HashMap<String, Message> messages;
-
-    //if charityStatus = false -> charity account is not active, otherwise it is active (true)
     private boolean charityStatus;
 
     public Charity(int licenseNumber, String charityName, String charityEmail, String branchAddress, String charityPassword, String charityPhoneNumber, String charityType, String imgUrl, String charityDescription) {
@@ -176,7 +174,7 @@ public class Charity {
                     Charity.this.imgUrl = imgUrl;
                     Charity.this.charityDescription = charityDescription;
                     Charity.this.rating = 0;
-                    Charity.this.charityStatus = false;
+                    Charity.this.charityStatus = true;
                     Charity.this.campaign = null;
                     saveToFirebase();
                 }
