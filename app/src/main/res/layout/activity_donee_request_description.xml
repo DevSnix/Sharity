@@ -64,7 +64,7 @@
             android:fontFamily="sans-serif"
             android:layout_marginStart="5dp"
             android:layout_marginTop="25dp"
-            android:text="Upon submitting this form, only the application manager will be exposed to the provided private details. You will be further informed via email regarding the donation request. \nAdditionally, your account will enter into 'in-review' mode, hence you will not be able to access it until further notice."
+            android:text="Upon submitting this form, only the application manager will be exposed to the provided private details."
             tools:ignore="HardcodedText" />
 
         <Button
