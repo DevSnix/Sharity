@@ -126,10 +126,30 @@ public class CharityProfileActivity extends AppCompatActivity {
         });
 
         btnViewCampaign.setOnClickListener(v -> {
-            Intent intent = new Intent(CharityProfileActivity.this, ViewCampaignActivity.class);
-            intent.putExtra("licenseNumber", licenseNumber); // Pass the license number to the next activity
-            startActivity(intent);
+            // Check if a campaign exists for the charity
+            DatabaseReference campaignRef = FirebaseDatabase.getInstance().getReference("charities").child(String.valueOf(licenseNumber)).child("campaign");
+
+            campaignRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        // Campaign exists, start the ViewCampaignActivity
+                        Intent intent = new Intent(CharityProfileActivity.this, ViewCampaignActivity.class);
+                        intent.putExtra("licenseNumber", licenseNumber); // Pass the license number to the next activity
+                        startActivity(intent);
+                    } else {
+                        // No campaign found, display a toast message
+                        Toast.makeText(CharityProfileActivity.this, "No campaign running for this charity", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(CharityProfileActivity.this, "Failed to check campaign status", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
+
 
 
         btnDialUs.setOnClickListener(v -> {
