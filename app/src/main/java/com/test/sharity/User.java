@@ -5,8 +5,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.Random;
 
@@ -18,7 +16,7 @@ public class User {
     private String userEmail;
     private String userPhoneNumber;
     private String userAddress;
-    // if userStatus = false -> user is not active, otherwise it is active (true)
+    // If userStatus = false -> user is not active, otherwise it is active (true)
     private boolean userStatus;
     private String profilePictureUrl;
 
