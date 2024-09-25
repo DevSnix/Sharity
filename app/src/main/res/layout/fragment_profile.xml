@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".ProfileFragment">
 
-    <!-- Profile Section with background color -->
     <LinearLayout
         android:id="@+id/profileSection"
         android:layout_width="match_parent"

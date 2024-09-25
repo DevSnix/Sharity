@@ -12,7 +12,6 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <!-- Profile Picture -->
         <ImageView
             android:id="@+id/ivProfilePicture"
             android:layout_width="120dp"
@@ -22,7 +21,6 @@
             android:scaleType="centerCrop"
             tools:ignore="ContentDescription" />
 
-        <!-- Update Profile Picture Button -->
         <Button
             android:id="@+id/btnUpdateProfilePicture"
             android:layout_width="wrap_content"
@@ -34,7 +32,6 @@
             android:textColor="@android:color/black"
             android:textStyle="bold" />
 
-        <!-- User Details Section -->
         <EditText
             android:id="@+id/etUserPassword"
             android:layout_width="match_parent"
@@ -67,7 +64,6 @@
             android:hint="Address"
             android:inputType="textPostalAddress" />
 
-        <!-- Save and Exit Button -->
         <Button
             android:id="@+id/btnSaveAndExit"
             android:layout_width="match_parent"
@@ -80,7 +76,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Re-login to see changes TextView at the bottom -->
     <TextView
         android:id="@+id/tvReloginNotice"
         android:layout_width="match_parent"

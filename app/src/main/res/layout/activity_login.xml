@@ -47,7 +47,6 @@
         android:textColorHint="@color/black"
         android:textColor="@color/black"
         tools:ignore="HardcodedText" />
-    <!--"autofillHints" definition: allows the phone to use its autofill features-->
 
     <EditText
         android:id="@+id/etCharityLicenseNumberLogin"

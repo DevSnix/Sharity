@@ -24,7 +24,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone" />
 
-        <!-- Campaign Image -->
         <ImageView
             android:id="@+id/ivCampaignImage"
             android:layout_width="0dp"
@@ -37,7 +36,6 @@
             android:background="@android:color/darker_gray"
             android:contentDescription="Campaign Image" />
 
-        <!-- Campaign Title -->
         <TextView
             android:id="@+id/tvCampaignTitle"
             android:layout_width="wrap_content"
@@ -51,7 +49,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Campaign Description -->
         <TextView
             android:id="@+id/tvCampaignDescription"
             android:layout_width="wrap_content"
@@ -64,7 +61,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Start Date -->
+
         <TextView
             android:id="@+id/tvStartDate"
             android:layout_width="wrap_content"
@@ -76,7 +73,6 @@
             app:layout_constraintTop_toBottomOf="@id/tvCampaignDescription"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- End Date -->
         <TextView
             android:id="@+id/tvEndDate"
             android:layout_width="wrap_content"
@@ -88,7 +84,6 @@
             app:layout_constraintTop_toBottomOf="@id/tvCampaignDescription"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Progress Bar for Campaign Progress -->
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
@@ -102,7 +97,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Progress Bar Text: showing current amount / target amount -->
         <TextView
             android:id="@+id/tvProgress"
             android:layout_width="wrap_content"

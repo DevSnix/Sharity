@@ -12,7 +12,6 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <!-- Profile Picture -->
         <ImageView
             android:id="@+id/imageUpdateCharityProfile"
             android:layout_width="match_parent"
@@ -22,7 +21,6 @@
             android:contentDescription="@string/charity_image"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <!-- Update Profile Picture Button -->
         <Button
             android:id="@+id/btnUpdateProfilePicture"
             android:layout_width="wrap_content"
@@ -37,7 +35,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"/>
 
-        <!-- User Details Section -->
         <EditText
             android:id="@+id/etCharityPassword"
             android:layout_width="match_parent"
@@ -87,7 +84,6 @@
             android:layout_below="@+id/etCharityAddress"
             tools:ignore="Autofill,HardcodedText" />
 
-        <!-- Save and Exit Button -->
         <Button
             android:id="@+id/btnSaveAndExit"
             android:layout_width="match_parent"

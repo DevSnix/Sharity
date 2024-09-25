@@ -6,14 +6,12 @@
     android:padding="16dp"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Reviewer Information -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="8dp">
 
-        <!-- Profile Image -->
         <ImageView
             android:id="@+id/imageViewProfilePicture"
             android:layout_width="40dp"
@@ -22,7 +20,6 @@
             android:layout_marginEnd="8dp"
             tools:ignore="ContentDescription"/>
 
-        <!-- Reviewer Username -->
         <TextView
             android:id="@+id/textViewUsername"
             android:layout_width="wrap_content"
@@ -33,13 +30,11 @@
             android:layout_marginTop="5dp"/>
     </LinearLayout>
 
-    <!-- Review Date and Rating -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <!-- Review Date -->
         <TextView
             android:id="@+id/textViewReviewDate"
             android:layout_width="wrap_content"
@@ -53,7 +48,7 @@
             android:layout_height="wrap_content"
             android:text="-  "/>
 
-        <!-- Review Rating -->
+
         <TextView
             android:id="@+id/textViewReviewRating"
             android:layout_width="wrap_content"
@@ -63,7 +58,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Review Text -->
     <TextView
         android:id="@+id/textViewReviewText"
         android:layout_width="match_parent"
@@ -72,7 +66,6 @@
         android:textSize="16sp"
         android:layout_marginTop="8dp" />
 
-    <!-- Divider Line -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
