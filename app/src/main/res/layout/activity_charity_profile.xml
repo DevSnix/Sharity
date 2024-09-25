@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Charity Image -->
         <ImageView
             android:id="@+id/imageViewCharityProfile"
             android:layout_width="match_parent"
@@ -33,7 +32,6 @@
             android:clickable="true"
             android:focusable="true" />
 
-        <!-- Charity Name -->
         <TextView
             android:id="@+id/textViewCharityName"
             android:layout_width="wrap_content"
@@ -55,7 +53,6 @@
             android:layout_alignParentRight="true"
             android:layout_margin="15dp"/>
 
-        <!-- About Us Text -->
         <TextView
             android:id="@+id/textViewAboutUs"
             android:layout_width="match_parent"
@@ -67,7 +64,6 @@
             android:textStyle="bold"
             android:layout_below="@id/textViewCharityName"/>
 
-        <!-- Charity Description -->
         <TextView
             android:id="@+id/textViewCharityDescription"
             android:layout_width="match_parent"
@@ -78,7 +74,6 @@
             android:layout_below="@id/textViewAboutUs"
             android:textStyle="bold"/>
 
-        <!-- Charity Type and Rating -->
         <LinearLayout
             android:id="@+id/linearLayoutCharityTypeRating"
             android:layout_width="match_parent"
@@ -149,7 +144,6 @@
             android:layout_marginEnd="16dp"
             android:textSize="14sp"/>
 
-        <!-- See All Reviews -->
         <TextView
             android:id="@+id/textViewSeeAllReviews"
             android:layout_width="wrap_content"
@@ -214,6 +208,32 @@
             android:text="View Current Running Campaign"
             android:backgroundTint="@color/light_orange"
             android:textColor="@android:color/black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/btnViewCampaign"
+            android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:id="@+id/btnDialUs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="Dial Us"
+                android:backgroundTint="@color/light_orange"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:id="@+id/btnEmailUs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email Us"
+                android:backgroundTint="@color/light_orange"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
 
     </RelativeLayout>
 </ScrollView>

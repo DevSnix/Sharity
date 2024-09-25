@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -53,6 +55,11 @@ public class CharityProfileActivity extends AppCompatActivity {
     private User currentUser;
     private Button btnViewCampaign;
     private String userType;
+    private Button btnDialUs;
+    private Button btnEmailUs;
+    private String charityPhoneNumber;
+    private String charityEmail;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +81,8 @@ public class CharityProfileActivity extends AppCompatActivity {
         btnSubmitReview = findViewById(R.id.btnSubmitReview);
         btnViewMessage = findViewById(R.id.btnViewMessage);
         btnViewCampaign = findViewById(R.id.btnViewCampaign);
-
+        btnDialUs = findViewById(R.id.btnDialUs);
+        btnEmailUs = findViewById(R.id.btnEmailUs);
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
         userId = String.valueOf(sharedPreferences.getInt("userId", -1));
@@ -90,6 +98,7 @@ public class CharityProfileActivity extends AppCompatActivity {
         }
 
         buttonDonateNow.setOnClickListener(v -> {
+            //Restrict donation ability only for donors
             if (userType.equals("Donor")) {
                 Intent intent = new Intent(CharityProfileActivity.this, SimulationPaymentActivity.class);
                 intent.putExtra("licenseNumber", licenseNumber);
@@ -116,11 +125,35 @@ public class CharityProfileActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        btnViewCampaign.setOnClickListener(v ->{
+        btnViewCampaign.setOnClickListener(v -> {
             Intent intent = new Intent(CharityProfileActivity.this, ViewCampaignActivity.class);
             intent.putExtra("licenseNumber", licenseNumber); // Pass the license number to the next activity
             startActivity(intent);
         });
+
+
+        btnDialUs.setOnClickListener(v -> {
+            if (charityPhoneNumber != null && !charityPhoneNumber.isEmpty()) {
+                Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+                dialIntent.setData(Uri.parse("tel:" + charityPhoneNumber));
+                startActivity(dialIntent);
+            } else {
+                Toast.makeText(CharityProfileActivity.this, "Phone number not available", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        btnEmailUs.setOnClickListener(v -> {
+            if (charityEmail != null && !charityEmail.isEmpty()) {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse("mailto:" + charityEmail));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Inquiry about Charity");
+                startActivity(emailIntent);
+            } else {
+                Toast.makeText(CharityProfileActivity.this, "Email not available", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     // Fetch current user details from Firebase
@@ -206,6 +239,8 @@ public class CharityProfileActivity extends AppCompatActivity {
                     textViewCharityType.setText(charity.getCharityType() + " Charity");
                     textViewCharityRating.setText("Rating: " + charity.getRating());
                     textViewCharityDescription.setText(charity.getCharityDescription());
+                    charityPhoneNumber = charity.getCharityPhoneNumber();
+                    charityEmail = charity.getCharityEmail();
                     loadCharityImage(charity.getImgUrl());
                     loadMostRecentReview();
                 }
@@ -277,7 +312,6 @@ public class CharityProfileActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     // Submit a review which includes the current user
