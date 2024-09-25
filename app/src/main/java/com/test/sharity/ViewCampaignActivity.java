@@ -70,8 +70,6 @@ public class ViewCampaignActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        sendGoalReachedNotification();
     }
 
     private void loadCampaignData() {
